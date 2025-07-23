@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowState - Earn Your Dopamine Time</title>
+    <link rel="stylesheet" href="blocked.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                    <path d="M8 12h8" stroke="currentColor" stroke-width="2"/>
+                    <path d="M12 8v8" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <h1>FlowState</h1>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="blocked-message">
+                <div class="emoji">🎯</div>
+                <h2>Dopamine Queue Active</h2>
+                <p class="site-name">You wanted to visit <strong id="blockedSite">this site</strong></p>
+                <p class="explanation">Great news! This site is in your dopamine queue. Complete some focused work first to earn access.</p>
+            </div>
+
+            <div class="stats-display">
+                <div class="stat-card">
+                    <div class="stat-value" id="earnedMinutes">0</div>
+                    <div class="stat-label">Minutes Earned</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="focusTime">0m</div>
+                    <div class="stat-label">Total Focus Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="tasksCompleted">0</div>
+                    <div class="stat-label">Tasks Completed</div>
+                </div>
+            </div>
+
+            <div class="earning-section">
+                <h3>💪 Earn Dopamine Minutes</h3>
+                <div class="earning-options">
+                    <div class="task-option" data-task="focus" data-points="1">
+                        <div class="task-icon">⏱️</div>
+                        <div class="task-info">
+                            <div class="task-name">10 Minutes of Focus</div>
+                            <div class="task-desc">Work on any productive task for 10 minutes</div>
+                            <div class="task-reward">+1 dopamine minute</div>
+                        </div>
+                    </div>
+
+                    <div class="task-option" data-task="deep-work" data-points="3">
+                        <div class="task-icon">🧠</div>
+                        <div class="task-info">
+                            <div class="task-name">30 Minutes Deep Work</div>
+                            <div class="task-desc">Sustained focus on important work</div>
+                            <div class="task-reward">+3 dopamine minutes</div>
+                        </div>
+                    </div>
+
+                    <div class="task-option" data-task="task-complete" data-points="2">
+                        <div class="task-icon">✅</div>
+                        <div class="task-info">
+                            <div class="task-name">Complete a Task</div>
+                            <div class="task-desc">Finish something on your todo list</div>
+                            <div class="task-reward">+2 dopamine minutes</div>
+                        </div>
+                    </div>
+
+                    <div class="task-option" data-task="learning" data-points="2">
+                        <div class="task-icon">📚</div>
+                        <div class="task-info">
+                            <div class="task-name">Learn Something New</div>
+                            <div class="task-desc">Read, watch educational content, or practice a skill</div>
+                            <div class="task-reward">+2 dopamine minutes</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <h3>🚀 Quick Actions</h3>
+                <div class="action-buttons">
+                    <button class="action-btn primary" id="startTimer">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                            <polyline points="12,6 12,12 16,14" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Start Focus Timer
+                    </button>
+
+                    <button class="action-btn secondary" id="openProductiveSite">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" stroke="currentColor" stroke-width="2"/>
+                            <polyline points="15,3 21,3 21,9" stroke="currentColor" stroke-width="2"/>
+                            <line x1="10" y1="14" x2="21" y2="3" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Suggest Productive Site
+                    </button>
+
+                    <button class="action-btn secondary" id="parkThought">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Park This Thought
+                    </button>
+                </div>
+            </div>
+
+            <div class="motivation-section">
+                <div class="motivation-card">
+                    <div class="motivation-icon">🌟</div>
+                    <div class="motivation-text">
+                        <div class="motivation-title">Your ADHD Brain is Powerful!</div>
+                        <div class="motivation-desc">Use that impulse energy to fuel productive work first. You'll enjoy the reward even more knowing you earned it!</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Timer Modal -->
+        <div class="timer-modal" id="timerModal" style="display: none;">
+            <div class="timer-content">
+                <div class="timer-header">
+                    <h3>Focus Timer</h3>
+                    <button class="timer-close" id="closeTimer">×</button>
+                </div>
+                <div class="timer-display">
+                    <div class="timer-time" id="timerDisplay">10:00</div>
+                    <div class="timer-label">Focus Time Remaining</div>
+                </div>
+                <div class="timer-controls">
+                    <button class="timer-btn start" id="startBtn">Start</button>
+                    <button class="timer-btn pause" id="pauseBtn" style="display: none;">Pause</button>
+                    <button class="timer-btn reset" id="resetBtn">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Thought Parking Modal -->
+        <div class="thought-modal" id="thoughtModal" style="display: none;">
+            <div class="thought-content">
+                <div class="thought-header">
+                    <h3>Park Your Thought</h3>
+                    <button class="thought-close" id="closeThought">×</button>
+                </div>
+                <div class="thought-body">
+                    <textarea id="thoughtText" placeholder="What's on your mind? Park it here so you can focus on productive work first..."></textarea>
+                </div>
+                <div class="thought-actions">
+                    <button class="action-btn primary" id="saveThought">Park Thought</button>
+                    <button class="action-btn secondary" id="cancelThought">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="blocked.js"></script>
+</body>
+</html>

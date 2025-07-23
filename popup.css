@@ -1,0 +1,321 @@
+/* ADHD-friendly dark theme with calming colors */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 380px;
+    min-height: 500px;
+    background: #1a1a1a;
+    color: #e0e0e0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.container {
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #333;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo svg {
+    color: #64b5f6;
+}
+
+.logo h1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #64b5f6;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4caf50;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* Stats Section */
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: #2a2a2a;
+    border-radius: 8px;
+    padding: 12px 8px;
+    text-align: center;
+    border: 1px solid #333;
+    transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+    background: #323232;
+    border-color: #444;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: 600;
+    color: #64b5f6;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: #b0b0b0;
+}
+
+/* Features Section */
+.features-section h2 {
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: #e0e0e0;
+}
+
+.feature-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+    margin-bottom: 8px;
+    background: #2a2a2a;
+    border-radius: 8px;
+    border: 1px solid #333;
+    transition: all 0.2s ease;
+}
+
+.feature-toggle:hover {
+    background: #323232;
+    border-color: #444;
+}
+
+.feature-info {
+    flex: 1;
+}
+
+.feature-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #e0e0e0;
+    margin-bottom: 2px;
+}
+
+.feature-desc {
+    font-size: 11px;
+    color: #b0b0b0;
+    line-height: 1.3;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #555;
+    transition: 0.3s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #64b5f6;
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+/* Actions Section */
+.actions-section {
+    margin-top: 20px;
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-btn.primary {
+    background: #64b5f6;
+    color: #1a1a1a;
+}
+
+.action-btn.primary:hover {
+    background: #42a5f5;
+    transform: translateY(-1px);
+}
+
+.action-btn.secondary {
+    background: #2a2a2a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+}
+
+.action-btn.secondary:hover {
+    background: #323232;
+    border-color: #555;
+}
+
+/* Thought Input Section */
+.thought-input-section, .thoughts-display {
+    margin-top: 20px;
+    padding: 16px;
+    background: #2a2a2a;
+    border-radius: 8px;
+    border: 1px solid #333;
+}
+
+.thought-input-section h3, .thoughts-display h3 {
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: #64b5f6;
+}
+
+#thoughtInput {
+    width: 100%;
+    min-height: 60px;
+    padding: 8px;
+    background: #1a1a1a;
+    border: 1px solid #444;
+    border-radius: 4px;
+    color: #e0e0e0;
+    font-family: inherit;
+    font-size: 12px;
+    resize: vertical;
+}
+
+#thoughtInput:focus {
+    outline: none;
+    border-color: #64b5f6;
+}
+
+.thought-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* Thoughts Display */
+.thoughts-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.thought-item {
+    padding: 8px;
+    margin-bottom: 8px;
+    background: #1a1a1a;
+    border-radius: 4px;
+    border-left: 3px solid #64b5f6;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.thought-timestamp {
+    font-size: 10px;
+    color: #888;
+    margin-top: 4px;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #2a2a2a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #666;
+}
+
+/* Animations */
+.feature-toggle, .stat-card, .action-btn {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Focus states for accessibility */
+button:focus, input:focus, textarea:focus {
+    outline: 2px solid #64b5f6;
+    outline-offset: 2px;
+}

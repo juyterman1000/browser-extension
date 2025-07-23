@@ -1,0 +1,295 @@
+/* content.css - Styles for in-page overlays */
+
+/* ADHD-friendly overlay base styles */
+.flowstate-overlay {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 380px !important;
+    max-width: calc(100vw - 40px) !important;
+    background: #1a1a1a !important;
+    border-radius: 12px !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(100, 181, 246, 0.2) !important;
+    z-index: 2147483647 !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+    color: #e0e0e0 !important;
+    animation: flowstate-slide-in 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    backdrop-filter: blur(10px) !important;
+}
+
+@keyframes flowstate-slide-in {
+    from {
+        opacity: 0;
+        transform: translateX(100%) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+/* Header styles */
+.flowstate-overlay .overlay-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 16px 20px !important;
+    border-bottom: 1px solid #333 !important;
+    background: rgba(42, 42, 42, 0.8) !important;
+    border-radius: 12px 12px 0 0 !important;
+}
+
+.flowstate-overlay .overlay-icon {
+    font-size: 20px !important;
+    margin-right: 8px !important;
+}
+
+.flowstate-overlay .overlay-title {
+    flex: 1 !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #64b5f6 !important;
+}
+
+.flowstate-overlay .overlay-close {
+    background: none !important;
+    border: none !important;
+    color: #b0b0b0 !important;
+    font-size: 20px !important;
+    cursor: pointer !important;
+    padding: 4px !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease !important;
+}
+
+.flowstate-overlay .overlay-close:hover {
+    background: #333 !important;
+    color: #e0e0e0 !important;
+}
+
+/* Content styles */
+.flowstate-overlay .overlay-content {
+    padding: 20px !important;
+}
+
+/* Momentum Keeper specific styles */
+.momentum-keeper .previous-activity {
+    margin-bottom: 20px !important;
+}
+
+.momentum-keeper .activity-label {
+    font-size: 12px !important;
+    color: #b0b0b0 !important;
+    margin-bottom: 6px !important;
+}
+
+.momentum-keeper .activity-title {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #e0e0e0 !important;
+    margin-bottom: 4px !important;
+    line-height: 1.3 !important;
+    max-height: 40px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.momentum-keeper .activity-time {
+    font-size: 11px !important;
+    color: #888 !important;
+}
+
+/* Hyperfocus Breaker specific styles */
+.hyperfocus-breaker .focus-celebration {
+    text-align: center !important;
+    margin-bottom: 20px !important;
+}
+
+.hyperfocus-breaker .focus-time {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: #4caf50 !important;
+    margin-bottom: 8px !important;
+}
+
+.hyperfocus-breaker .focus-message {
+    font-size: 13px !important;
+    color: #b0b0b0 !important;
+    line-height: 1.4 !important;
+}
+
+.hyperfocus-breaker .body-check-list {
+    margin-bottom: 20px !important;
+}
+
+.hyperfocus-breaker .check-item {
+    display: flex !important;
+    align-items: center !important;
+    margin-bottom: 12px !important;
+    padding: 8px !important;
+    background: rgba(42, 42, 42, 0.5) !important;
+    border-radius: 6px !important;
+    transition: background 0.2s ease !important;
+}
+
+.hyperfocus-breaker .check-item:hover {
+    background: rgba(42, 42, 42, 0.8) !important;
+}
+
+.hyperfocus-breaker .check-item input[type="checkbox"] {
+    margin-right: 10px !important;
+    transform: scale(1.2) !important;
+}
+
+.hyperfocus-breaker .check-item label {
+    font-size: 13px !important;
+    color: #e0e0e0 !important;
+    cursor: pointer !important;
+}
+
+/* Dopamine Time Up specific styles */
+.dopamine-timeup .timeup-message {
+    text-align: center !important;
+    margin-bottom: 20px !important;
+}
+
+.dopamine-timeup .message-text {
+    font-size: 14px !important;
+    color: #e0e0e0 !important;
+    margin-bottom: 8px !important;
+}
+
+.dopamine-timeup .motivation {
+    font-size: 12px !important;
+    color: #64b5f6 !important;
+    font-weight: 500 !important;
+}
+
+/* Thought Capture specific styles */
+.thought-capture .overlay-content {
+    padding: 16px 20px 20px !important;
+}
+
+.thought-capture #quick-thought-input {
+    width: 100% !important;
+    min-height: 80px !important;
+    padding: 12px !important;
+    background: rgba(26, 26, 26, 0.8) !important;
+    border: 1px solid #444 !important;
+    border-radius: 6px !important;
+    color: #e0e0e0 !important;
+    font-family: inherit !important;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    resize: vertical !important;
+    margin-bottom: 16px !important;
+    box-sizing: border-box !important;
+}
+
+.thought-capture #quick-thought-input:focus {
+    outline: none !important;
+    border-color: #64b5f6 !important;
+    box-shadow: 0 0 0 2px rgba(100, 181, 246, 0.2) !important;
+}
+
+.thought-capture #quick-thought-input::placeholder {
+    color: #888 !important;
+}
+
+.thought-capture .success-message {
+    text-align: center !important;
+    padding: 20px !important;
+    font-size: 14px !important;
+    color: #4caf50 !important;
+}
+
+/* Action buttons */
+.flowstate-overlay .overlay-actions {
+    display: flex !important;
+    gap: 10px !important;
+    margin-top: 16px !important;
+}
+
+.flowstate-overlay .btn-primary,
+.flowstate-overlay .btn-secondary {
+    flex: 1 !important;
+    padding: 10px 12px !important;
+    border: none !important;
+    border-radius: 6px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    font-family: inherit !important;
+}
+
+.flowstate-overlay .btn-primary {
+    background: #64b5f6 !important;
+    color: #1a1a1a !important;
+}
+
+.flowstate-overlay .btn-primary:hover {
+    background: #42a5f5 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(100, 181, 246, 0.3) !important;
+}
+
+.flowstate-overlay .btn-secondary {
+    background: rgba(42, 42, 42, 0.8) !important;
+    color: #e0e0e0 !important;
+    border: 1px solid #444 !important;
+}
+
+.flowstate-overlay .btn-secondary:hover {
+    background: rgba(50, 50, 50, 0.8) !important;
+    border-color: #555 !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+    .flowstate-overlay {
+        width: calc(100vw - 20px) !important;
+        right: 10px !important;
+        top: 10px !important;
+    }
+    
+    .flowstate-overlay .overlay-actions {
+        flex-direction: column !important;
+    }
+    
+    .hyperfocus-breaker .check-item {
+        font-size: 12px !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .flowstate-overlay {
+        border: 2px solid #64b5f6 !important;
+    }
+    
+    .flowstate-overlay .overlay-header {
+        border-bottom: 2px solid #64b5f6 !important;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .flowstate-overlay {
+        animation: none !important;
+    }
+    
+    .flowstate-overlay * {
+        transition: none !important;
+    }
+}
+
+/* Focus styles for accessibility */
+.flowstate-overlay button:focus,
+.flowstate-overlay input:focus,
+.flowstate-overlay textarea:focus {
+    outline: 2px solid #64b5f6 !important;
+    outline-offset: 2px !important;
+}
