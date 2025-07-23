@@ -1,154 +1,136 @@
-# FlowState - ADHD Companion Browser Extension
+# FlowState AI - ADHD Companion Browser Extension
 
-🧠 **A revolutionary browser extension designed specifically for ADHD minds**
+## 🧠 Revolutionary ADHD Support with Cutting-Edge AI
 
-FlowState works *with* your brain, not against it, helping you maintain focus, manage hyperfocus, and turn impulsivity into productivity.
+FlowState is a groundbreaking Chrome extension that leverages Chrome's built-in Gemini Nano AI APIs (2025 tech) to provide personalized ADHD support that works **with** your brain patterns rather than against them.
 
-## 🌟 Unique Features
+## ✨ AI-Powered Features
 
-### 🔄 Hyperfocus Circuit Breaker
-- Detects when you've been on the same site/task for too long
-- Gently interrupts with wellness reminders (posture, water, bathroom)
-- **Celebrates your focus** while protecting your wellbeing
-- Non-punitive approach - acknowledges hyperfocus as a superpower
+### Core ADHD Features
+- **🔥 Hyperfocus Circuit Breaker** - AI detects when you're hyperfocusing and suggests strategic breaks
+- **⚡ Task Momentum Keeper** - Smart reminders to maintain your productive flow states  
+- **🎮 Dopamine Queue** - Gamified system that earns you "fun time" after completing tasks
+- **🧠 Thought Parking Lot** - Capture distracting thoughts instantly (Ctrl+Shift+T)
+- **🔄 Context Restoration** - AI helps you get back into flow after interruptions
+- **⏸️ Impulse Buffer** - Smart delays for impulsive browsing with AI coaching
 
-### 🧭 Task Momentum Keeper
-- Shows "breadcrumb" trail when you switch tabs impulsively
-- "You were 3 paragraphs into that article about [topic]" with one-click return
-- Reduces the "what was I doing?" spiral
-- Maintains context during ADHD task-switching
+### AI Intelligence Layer
+- **📊 Smart Content Analysis** - Real-time assessment of webpage productivity vs. distraction risk
+- **🤖 Personalized ADHD Coaching** - Contextual insights based on your patterns
+- **💡 Dynamic Recommendations** - AI suggests optimal break times and focus strategies  
+- **📈 Pattern Recognition** - Learn your unique ADHD rhythms and energy cycles
+- **💬 Motivational Messaging** - Supportive, understanding communication that celebrates ADHD strengths
 
-### 🎯 Dopamine Queue
-- Instead of blocking "fun" sites, queues them as rewards
-- "Finish this task and you've earned 5 mins of Reddit"
-- Gamifies boring tasks with immediate dopamine hits
-- Guilt-free reward system
+## 🚀 Technology Stack (2025 Cutting-Edge)
 
-### 💭 Thought Parking Lot
-- Captures random thoughts without breaking your flow
-- Ctrl+Shift+T for quick thought capture
-- Review parked thoughts later when you're ready
-- Prevents thought loops and distraction spirals
+### Frontend Architecture
+- **React 19** + **TypeScript** - Modern component architecture
+- **Vite** - Lightning-fast build tooling
+- **Tailwind CSS 4** - Utility-first styling
+- **Shadcn UI** - Accessible component system
+- **Zustand** - Lightweight state management
+- **Lucide React** - Beautiful icons
 
-### 🗂️ Context Restoration
-- Saves your entire browser state (all tabs, positions)
-- One-click "workspaces" for different projects/modes
-- Perfect for ADHD context-switching struggles
-- Never lose your place again
+### AI Integration  
+- **Chrome's Built-in Gemini Nano APIs** - Local AI processing for privacy
+- **AI Language Model API** - Natural language understanding
+- **AI Summarizer API** - Content distillation for ADHD brains
+- **Smart Content Classification** - Productivity vs distraction detection
 
-### ⚡ Impulse Buffer
-- Intercepts impulsive tab opening with gentle redirect
-- Channels impulse energy into productive actions
-- Smart suggestions for productive alternatives
+### Chrome Extension Platform
+- **Manifest V3** - Latest extension standards
+- **Service Worker Architecture** - Efficient background processing
+- **Chrome Storage API** - Persistent user data
+- **Chrome Alarms API** - Smart notifications
+- **Content Script Integration** - Page-level AI interactions
 
-## 🎨 ADHD-Friendly Design
+## 🎯 ADHD-First Design Philosophy
 
-- **Dark theme** to reduce overstimulation
-- **Clean, non-overwhelming interface** with minimal visual clutter
-- **Color-coded feedback system** for instant visual understanding
-- **Smooth animations** that feel natural, not jarring
-- **Accessible typography** optimized for ADHD brains
+FlowState recognizes that ADHD brains aren't broken - they're wired differently. Our AI:
 
-## 🚀 Quick Start
+- **Celebrates Hyperfocus** as a superpower while preventing burnout
+- **Understands Task Switching** and provides context restoration
+- **Respects Impulse Thoughts** with non-judgmental parking solutions
+- **Adapts to Energy Cycles** with personalized recommendations
+- **Provides Dopamine Rewards** through meaningful gamification
 
-### Installation
-1. Download or clone this repository
-2. Open Chrome and go to `chrome://extensions/`
-3. Enable "Developer mode" in the top right
-4. Click "Load unpacked" and select the extension folder
-5. The FlowState icon will appear in your toolbar
+## 🔧 Development & Build
 
-### First Use
-1. Click the FlowState icon to open the popup
-2. All features are enabled by default with ADHD-optimized settings
-3. Customize which features you want active
-4. Start browsing - FlowState works automatically in the background
+```bash
+# Development build with hot reload
+npm run dev
 
-## 🔧 Features in Detail
+# Production build
+npm run build
 
-### Hyperfocus Management
-- **Default threshold**: 45 minutes of continuous focus
-- **Gentle reminders**: Body check notifications
-- **Celebration approach**: Acknowledges your deep focus as valuable
-- **Health integration**: Reminds about physical needs during hyperfocus
+# Type checking
+npm run type-check
+```
 
-### Dopamine Reward System
-- **Earn minutes**: 1 dopamine minute per 10 minutes of focused work
-- **Blocked sites**: Reddit, YouTube, Twitter, Instagram, Facebook, TikTok
-- **Gamified tasks**: Complete tasks to earn more reward time
-- **Flexible rewards**: Choose how to spend your earned minutes
+## 🔒 Privacy & Security
 
-### Smart Tab Management
-- **Momentum tracking**: Remembers what you were doing
-- **Context preservation**: Saves browser state automatically
-- **Workspace switching**: Quick save/restore of tab configurations
-- **Breadcrumb navigation**: Easy return to previous tasks
+- **100% Local Processing** - AI runs entirely in your browser via Chrome's Gemini Nano
+- **No Data Transmission** - Your ADHD patterns and data never leave your device
+- **Minimal Permissions** - Only essential Chrome APIs (tabs, storage, alarms)
+- **Privacy-First Architecture** - Built for neurodivergent users who value control
 
-### Thought Management
-- **Quick capture**: Ctrl+Shift+T keyboard shortcut
-- **Contextual saving**: Links thoughts to current page
-- **Review system**: Access parked thoughts when ready
-- **Distraction prevention**: Capture without losing focus
+## 🎮 Installation & Setup
 
-## ⚙️ Customization
+1. **Enable Chrome AI** (Required for full functionality):
+   - Chrome flags: `chrome://flags/#optimization-guide-on-device-model`
+   - Download Gemini Nano model
+   - Restart Chrome
 
-### Settings Available
-- **Hyperfocus threshold**: Adjust from 15-120 minutes
-- **Break reminders**: Set frequency of wellness checks
-- **Dopamine sites**: Customize which sites are queued
-- **Feature toggles**: Enable/disable any feature
-- **Notification preferences**: Control alert types
+2. **Load Extension**:
+   - Open Chrome → Extensions → Developer Mode
+   - Load unpacked: Select the extension directory
+   - Pin FlowState to toolbar
 
-### Keyboard Shortcuts
-- `Ctrl+Shift+T`: Quick thought capture
-- `Escape`: Close any FlowState overlay
-- Extension popup: Click toolbar icon
+3. **Grant Permissions**:
+   - Allow tab access for focus tracking
+   - Enable notifications for break reminders
 
-## 📊 Analytics & Insights
+## 📱 Usage
 
-FlowState tracks your productivity patterns:
-- **Focus time**: Total time spent in productive focus
-- **Dopamine minutes**: Reward time earned through focused work
-- **Thoughts parked**: Number of distractions successfully managed
-- **Task completion**: Productive achievements celebrated
+- **Quick Access**: Click extension icon for AI dashboard
+- **Thought Parking**: Press `Ctrl+Shift+T` on any page
+- **Break Reminders**: AI automatically detects hyperfocus periods
+- **Smart Insights**: View personalized ADHD coaching in popup
+- **Focus Timer**: Track and optimize your focus sessions
 
-## 🧠 The ADHD-First Philosophy
+## 🌟 Why FlowState Stands Out
 
-### What Makes FlowState Different
+### Traditional ADHD Tools
+- Generic timers and blockers
+- Punitive approach ("you're distracted")
+- One-size-fits-all solutions
+- Static, non-adaptive features
 
-**Traditional tools**: Block distractions → Feel restricted → Fight the system
-**FlowState approach**: Channel impulses → Earn rewards → Work with your brain
+### FlowState AI Revolution  
+- **Personalized AI coaching** based on your unique patterns
+- **Celebratory approach** ("your brain is amazing")
+- **Adaptive intelligence** that learns and evolves
+- **Context-aware support** for real ADHD challenges
 
-### Core Principles
-1. **Non-punitive**: Celebrates ADHD traits instead of fighting them
-2. **Dopamine-aware**: Uses immediate rewards to motivate continued focus
-3. **Context-preserving**: Acknowledges that ADHD brains switch contexts frequently
-4. **Body-aware**: Reminds about physical needs during hyperfocus sessions
-5. **Impulse-friendly**: Channels impulsive energy into productive actions
+## 🧪 Tech Innovation Highlights
 
-### Built for ADHD Patterns
-- **Hyperfocus**: Celebrated but balanced with health reminders
-- **Task switching**: Supported with momentum preservation
-- **Impulse thoughts**: Captured without breaking flow
-- **Reward seeking**: Channeled into productive dopamine earning
-- **Context switching**: Made seamless with workspace management
+- **Chrome's Gemini Nano Integration** - First extension to leverage 2025 AI APIs
+- **Real-time Content Analysis** - AI classifies webpage productivity
+- **ADHD Pattern Recognition** - Machine learning for neurodivergent behaviors  
+- **Local Privacy-Preserving AI** - No cloud dependencies
+- **Contextual Coaching** - Situation-aware support messages
+- **Adaptive Algorithms** - Personalization without data collection
 
-## 🔒 Privacy & Data
+## 🔮 Future AI Enhancements
 
-FlowState is privacy-first:
-- ✅ All data stored locally on your device
-- ✅ No data sent to external servers
-- ✅ No tracking or analytics
-- ✅ You control all your information
-- ✅ Open source code for transparency
+- **Mood & Energy Tracking** - AI correlates focus with emotional states
+- **Smart Task Prioritization** - ML-powered productivity recommendations
+- **Contextual Summarization** - AI distills long content for ADHD consumption
+- **Social Support Integration** - Connect with other ADHD brains (opt-in)
+- **Advanced Pattern Analytics** - Deep insights into your focus rhythms
 
-## 🛠️ Development
+---
 
-### Tech Stack
-- **Manifest V3** Chrome Extension
-- **Vanilla JavaScript** - No heavy frameworks
-- **Chrome Storage API** - Local data persistence
-- **Chrome Tabs API** - Smart tab management
-- **Service Worker** - Background processing
+**FlowState AI**: Where cutting-edge technology meets compassionate ADHD support. Your brain is not broken - it's extraordinary. Let AI help you unlock its full potential.
 
-### File Structure
+*Built with ❤️ for the ADHD community using 2025's most advanced browser AI capabilities.*
