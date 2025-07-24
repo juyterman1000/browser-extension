@@ -1,4 +1,4 @@
-modules = ["nodejs-20", "python-3.11"]
+modules = ["nodejs-20", "web", "python-3.11"]
 
 [nix]
 channel = "stable-24_05"
@@ -27,3 +27,6 @@ waitForPort = 5000
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[agent]
+expertMode = true
