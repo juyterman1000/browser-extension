@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowState Dopamine Marketplace</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .coin-balance {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 30px;
+            border-radius: 25px;
+            display: inline-block;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+        
+        .blocked-message {
+            background: rgba(255, 107, 107, 0.2);
+            border: 1px solid #ff6b6b;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .marketplace-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .reward-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .reward-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .reward-icon {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        
+        .reward-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .reward-description {
+            opacity: 0.9;
+            margin-bottom: 20px;
+            text-align: center;
+            line-height: 1.5;
+        }
+        
+        .reward-price {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        
+        .buy-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #1a1a1a;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .buy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .buy-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .premium-card {
+            border: 2px solid #ffd700;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 237, 78, 0.1));
+        }
+        
+        .premium-badge {
+            background: #ffd700;
+            color: #1a1a1a;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+            position: absolute;
+            top: -10px;
+            right: 20px;
+        }
+        
+        .category-section {
+            margin-bottom: 40px;
+        }
+        
+        .category-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            text-align: center;
+            opacity: 0.9;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background: #10b981;
+            color: white;
+        }
+        
+        .notification.error {
+            background: #ef4444;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛒 Dopamine Marketplace</h1>
+            <div class="coin-balance">
+                🪙 <span id="coinBalance">0</span> Dopamine Coins
+            </div>
+        </div>
+
+        <div class="blocked-message" id="blockedMessage" style="display: none;">
+            <h3>🚫 Site Blocked</h3>
+            <p>You tried to visit <strong id="blockedSite"></strong>. Earn coins by focusing first, then unlock access!</p>
+        </div>
+
+        <div class="category-section">
+            <h2 class="category-title">🎮 Fun Break Rewards</h2>
+            <div class="marketplace-grid">
+                <div class="reward-card">
+                    <div class="reward-icon">📱</div>
+                    <div class="reward-title">5 Minutes Social Media</div>
+                    <div class="reward-description">Guilt-free scrolling on your favorite social platform</div>
+                    <div class="reward-price">🪙 10 coins</div>
+                    <button class="buy-btn" data-item="social_5" data-price="10">Unlock Now</button>
+                </div>
+
+                <div class="reward-card">
+                    <div class="reward-icon">🎬</div>
+                    <div class="reward-title">15 Minutes YouTube</div>
+                    <div class="reward-description">Watch videos, tutorials, or entertainment content</div>
+                    <div class="reward-price">🪙 25 coins</div>
+                    <button class="buy-btn" data-item="youtube_15" data-price="25">Unlock Now</button>
+                </div>
+
+                <div class="reward-card premium-card">
+                    <div class="premium-badge">PREMIUM</div>
+                    <div class="reward-icon">🎮</div>
+                    <div class="reward-title">30 Minutes Gaming</div>
+                    <div class="reward-description">Play your favorite games with zero guilt</div>
+                    <div class="reward-price">🪙 50 coins</div>
+                    <button class="buy-btn" data-item="gaming_30" data-price="50">Unlock Now</button>
+                </div>
+
+                <div class="reward-card">
+                    <div class="reward-icon">📚</div>
+                    <div class="reward-title">Reddit Deep Dive</div>
+                    <div class="reward-description">Explore your favorite subreddits for 20 minutes</div>
+                    <div class="reward-price">🪙 30 coins</div>
+                    <button class="buy-btn" data-item="reddit_20" data-price="30">Unlock Now</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <h2 class="category-title">☕ Real World Rewards</h2>
+            <div class="marketplace-grid">
+                <div class="reward-card">
+                    <div class="reward-icon">☕</div>
+                    <div class="reward-title">Coffee Break</div>
+                    <div class="reward-description">Treat yourself to your favorite coffee or tea</div>
+                    <div class="reward-price">🪙 40 coins</div>
+                    <button class="buy-btn" data-item="coffee" data-price="40">Earn Reward</button>
+                </div>
+
+                <div class="reward-card">
+                    <div class="reward-icon">🍕</div>
+                    <div class="reward-title">Favorite Snack</div>
+                    <div class="reward-description">Enjoy a delicious snack you've been craving</div>
+                    <div class="reward-price">🪙 60 coins</div>
+                    <button class="buy-btn" data-item="snack" data-price="60">Earn Reward</button>
+                </div>
+
+                <div class="reward-card premium-card">
+                    <div class="premium-badge">PREMIUM</div>
+                    <div class="reward-icon">🎬</div>
+                    <div class="reward-title">Movie Night</div>
+                    <div class="reward-description">Watch a full movie or binge a few episodes</div>
+                    <div class="reward-price">🪙 100 coins</div>
+                    <button class="buy-btn" data-item="movie" data-price="100">Earn Reward</button>
+                </div>
+
+                <div class="reward-card">
+                    <div class="reward-icon">🛍️</div>
+                    <div class="reward-title">Small Purchase</div>
+                    <div class="reward-description">Buy something small you've wanted (under $20)</div>
+                    <div class="reward-price">🪙 150 coins</div>
+                    <button class="buy-btn" data-item="purchase" data-price="150">Earn Reward</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <h2 class="category-title">🎨 Power-ups & Customization</h2>
+            <div class="marketplace-grid">
+                <div class="reward-card">
+                    <div class="reward-icon">⚡</div>
+                    <div class="reward-title">2x XP Boost</div>
+                    <div class="reward-description">Double XP for your next focus session</div>
+                    <div class="reward-price">🪙 50 coins</div>
+                    <button class="buy-btn" data-item="xp_boost" data-price="50">Activate Boost</button>
+                </div>
+
+                <div class="reward-card">
+                    <div class="reward-icon">🎨</div>
+                    <div class="reward-title">Custom Theme</div>
+                    <div class="reward-description">Unlock new color themes for your FlowState interface</div>
+                    <div class="reward-price">🪙 75 coins</div>
+                    <button class="buy-btn" data-item="theme" data-price="75">Unlock Theme</button>
+                </div>
+
+                <div class="reward-card premium-card">
+                    <div class="premium-badge">PREMIUM</div>
+                    <div class="reward-icon">🏆</div>
+                    <div class="reward-title">Custom Achievement</div>
+                    <div class="reward-description">Create your own personal achievement goal</div>
+                    <div class="reward-price">🪙 200 coins</div>
+                    <button class="buy-btn" data-item="custom_achievement" data-price="200">Create Achievement</button>
+                </div>
+
+                <div class="reward-card">
+                    <div class="reward-icon">🎵</div>
+                    <div class="reward-title">Focus Playlist</div>
+                    <div class="reward-description">Unlock premium focus music and soundscapes</div>
+                    <div class="reward-price">🪙 80 coins</div>
+                    <button class="buy-btn" data-item="playlist" data-price="80">Unlock Music</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class DopamineMarketplace {
+            constructor() {
+                this.coins = 0;
+                this.init();
+            }
+
+            async init() {
+                await this.loadData();
+                this.setupEventListeners();
+                this.updateUI();
+                this.checkBlockedSite();
+            }
+
+            async loadData() {
+                try {
+                    const result = await chrome.storage.local.get(['flowStateGame']);
+                    if (result.flowStateGame) {
+                        this.coins = result.flowStateGame.dopamineCoins || 0;
+                    }
+                } catch (error) {
+                    console.error('Error loading data:', error);
+                }
+            }
+
+            checkBlockedSite() {
+                const params = new URLSearchParams(window.location.search);
+                const blockedSite = params.get('blocked');
+                
+                if (blockedSite) {
+                    document.getElementById('blockedMessage').style.display = 'block';
+                    document.getElementById('blockedSite').textContent = blockedSite;
+                }
+            }
+
+            setupEventListeners() {
+                document.querySelectorAll('.buy-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const item = e.target.dataset.item;
+                        const price = parseInt(e.target.dataset.price);
+                        this.purchaseItem(item, price, e.target);
+                    });
+                });
+            }
+
+            updateUI() {
+                document.getElementById('coinBalance').textContent = this.coins;
+                
+                // Update button states
+                document.querySelectorAll('.buy-btn').forEach(btn => {
+                    const price = parseInt(btn.dataset.price);
+                    if (this.coins < price) {
+                        btn.disabled = true;
+                        btn.textContent = 'Not Enough Coins';
+                    }
+                });
+            }
+
+            async purchaseItem(item, price, button) {
+                if (this.coins < price) {
+                    this.showNotification('Not enough coins! Focus more to earn rewards.', 'error');
+                    return;
+                }
+
+                try {
+                    const response = await chrome.runtime.sendMessage({
+                        type: 'purchaseReward',
+                        item: item,
+                        price: price
+                    });
+
+                    if (response.success) {
+                        this.coins -= price;
+                        this.updateUI();
+                        this.handlePurchaseSuccess(item, button);
+                    }
+                } catch (error) {
+                    console.error('Purchase failed:', error);
+                    this.showNotification('Purchase failed. Please try again.', 'error');
+                }
+            }
+
+            handlePurchaseSuccess(item, button) {
+                const rewards = {
+                    social_5: '🎉 5 minutes of social media unlocked!',
+                    youtube_15: '🎬 15 minutes of YouTube unlocked!',
+                    gaming_30: '🎮 30 minutes of gaming unlocked!',
+                    reddit_20: '📚 20 minutes of Reddit unlocked!',
+                    coffee: '☕ Coffee break earned! Treat yourself!',
+                    snack: '🍕 Snack time! You deserve it!',
+                    movie: '🎬 Movie night unlocked! Enjoy!',
+                    purchase: '🛍️ Small purchase approved! Go treat yourself!',
+                    xp_boost: '⚡ XP boost activated for next session!',
+                    theme: '🎨 New theme unlocked!',
+                    custom_achievement: '🏆 Custom achievement created!',
+                    playlist: '🎵 Focus playlist unlocked!'
+                };
+
+                this.showNotification(rewards[item] || 'Reward unlocked!', 'success');
+                
+                // Update button
+                button.textContent = '✅ Purchased';
+                button.disabled = true;
+                
+                // For digital rewards, redirect to the unlocked site
+                if (['social_5', 'youtube_15', 'reddit_20'].includes(item)) {
+                    setTimeout(() => {
+                        const sites = {
+                            social_5: 'https://twitter.com',
+                            youtube_15: 'https://youtube.com',
+                            reddit_20: 'https://reddit.com'
+                        };
+                        window.location.href = sites[item];
+                    }, 2000);
+                }
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 100);
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 300);
+                }, 3000);
+            }
+        }
+
+        // Initialize when DOM loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new DopamineMarketplace();
+        });
+    </script>
+</body>
+</html>

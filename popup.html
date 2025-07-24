@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlowState - ADHD Companion</title>
+    <title>FlowState - Level Up Your Focus!</title>
     <link rel="stylesheet" href="popup.css">
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
+        <!-- Header with XP and Level -->
         <div class="header">
             <div class="logo">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -16,124 +16,142 @@
                     <path d="M8 12h8" stroke="currentColor" stroke-width="2"/>
                     <path d="M12 8v8" stroke="currentColor" stroke-width="2"/>
                 </svg>
-                <h1>FlowState</h1>
+                <div class="title-section">
+                    <h1>FlowState</h1>
+                    <div class="level-badge">Level <span id="userLevel">1</span></div>
+                </div>
             </div>
-            <div class="status-indicator" id="statusIndicator">
-                <span class="status-dot"></span>
-                <span id="statusText">Ready</span>
+            <div class="xp-section">
+                <div class="xp-bar">
+                    <div class="xp-progress" id="xpProgress"></div>
+                </div>
+                <div class="xp-text"><span id="currentXP">0</span>/<span id="nextLevelXP">100</span> XP</div>
             </div>
         </div>
 
-        <!-- Quick Stats -->
-        <div class="stats-section">
-            <div class="stat-card">
-                <div class="stat-value" id="focusTime">0m</div>
-                <div class="stat-label">Focus Time</div>
+        <!-- Quick Stats Dashboard -->
+        <div class="stats-dashboard">
+            <div class="stat-card primary">
+                <div class="stat-icon">🔥</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="currentStreak">0</div>
+                    <div class="stat-label">Day Streak</div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-value" id="dopamineMinutes">0</div>
-                <div class="stat-label">Earned Minutes</div>
+            <div class="stat-card secondary">
+                <div class="stat-icon">🪙</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="dopamineCoins">0</div>
+                    <div class="stat-label">Dopamine Coins</div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-value" id="thoughtsParked">0</div>
-                <div class="stat-label">Thoughts Parked</div>
+            <div class="stat-card tertiary">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="focusMultiplier">1x</div>
+                    <div class="stat-label">Focus Multiplier</div>
+                </div>
             </div>
         </div>
 
-        <!-- Feature Toggles -->
-        <div class="features-section">
-            <h2>Features</h2>
-            
-            <div class="feature-toggle">
-                <div class="feature-info">
-                    <div class="feature-name">Hyperfocus Circuit Breaker</div>
-                    <div class="feature-desc">Gentle wellness reminders during deep focus</div>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="hyperfocusBreaker" checked>
-                    <span class="slider"></span>
-                </label>
+        <!-- Active Focus Session -->
+        <div class="focus-session" id="focusSession">
+            <div class="session-header">
+                <h3>🎯 Active Focus Session</h3>
+                <div class="session-timer" id="sessionTimer">00:00</div>
             </div>
-
-            <div class="feature-toggle">
-                <div class="feature-info">
-                    <div class="feature-name">Task Momentum Keeper</div>
-                    <div class="feature-desc">Remember what you were doing when switching tabs</div>
+            <div class="session-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="sessionProgress"></div>
                 </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="momentumKeeper" checked>
-                    <span class="slider"></span>
-                </label>
+                <div class="xp-earning">+<span id="currentXPRate">2</span> XP/min</div>
             </div>
-
-            <div class="feature-toggle">
-                <div class="feature-info">
-                    <div class="feature-name">Dopamine Queue</div>
-                    <div class="feature-desc">Earn fun time by completing tasks</div>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="dopamineQueue" checked>
-                    <span class="slider"></span>
-                </label>
+            <div class="session-controls">
+                <button class="btn-primary" id="startFocus">🚀 Start Focus</button>
+                <button class="btn-secondary" id="pauseFocus" style="display: none;">⏸️ Pause</button>
+                <button class="btn-tertiary" id="endFocus" style="display: none;">✅ Complete</button>
             </div>
+        </div>
 
-            <div class="feature-toggle">
-                <div class="feature-info">
-                    <div class="feature-name">Thought Parking Lot</div>
-                    <div class="feature-desc">Capture random thoughts without losing focus</div>
-                </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="thoughtParking" checked>
-                    <span class="slider"></span>
-                </label>
+        <!-- Daily Challenge -->
+        <div class="daily-challenge" id="dailyChallenge">
+            <div class="challenge-header">
+                <h3>🏆 Today's Challenge</h3>
+                <div class="challenge-reward">+50 XP</div>
             </div>
-
-            <div class="feature-toggle">
-                <div class="feature-info">
-                    <div class="feature-name">Context Restoration</div>
-                    <div class="feature-desc">Save and restore browser workspaces</div>
+            <div class="challenge-content">
+                <div class="challenge-text" id="challengeText">Focus for 25 minutes without distractions</div>
+                <div class="challenge-progress">
+                    <div class="progress-bar small">
+                        <div class="progress-fill" id="challengeProgress"></div>
+                    </div>
+                    <span id="challengeStatus">0/25 min</span>
                 </div>
-                <label class="toggle-switch">
-                    <input type="checkbox" id="contextRestoration" checked>
-                    <span class="slider"></span>
-                </label>
+            </div>
+        </div>
+
+        <!-- ADHD Buddy Section -->
+        <div class="buddy-section" id="buddySection">
+            <div class="buddy-header">
+                <h3>👥 ADHD Buddy</h3>
+                <button class="btn-link" id="findBuddy">Find Buddy</button>
+            </div>
+            <div class="buddy-content" id="buddyContent">
+                <div class="no-buddy">
+                    <p>Get matched with an accountability partner!</p>
+                    <button class="btn-primary small" id="matchBuddy">🤝 Find My Buddy</button>
+                </div>
             </div>
         </div>
 
         <!-- Quick Actions -->
-        <div class="actions-section">
-            <button class="action-btn primary" id="saveWorkspace">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke="currentColor" stroke-width="2"/>
-                    <polyline points="17,21 17,13 7,13 7,21" stroke="currentColor" stroke-width="2"/>
-                    <polyline points="7,3 7,8 15,8" stroke="currentColor" stroke-width="2"/>
-                </svg>
-                Save Workspace
+        <div class="quick-actions">
+            <button class="action-btn marketplace" id="openMarketplace">
+                <div class="action-icon">🛒</div>
+                <div class="action-text">Dopamine Shop</div>
+                <div class="action-badge" id="marketplaceBadge">3</div>
             </button>
             
-            <button class="action-btn secondary" id="viewThoughts">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="2"/>
-                </svg>
-                View Parked Thoughts
+            <button class="action-btn achievements" id="openAchievements">
+                <div class="action-icon">🏅</div>
+                <div class="action-text">Achievements</div>
+                <div class="action-badge new" id="achievementsBadge">!</div>
+            </button>
+            
+            <button class="action-btn leaderboard" id="openLeaderboard">
+                <div class="action-icon">📊</div>
+                <div class="action-text">Leaderboard</div>
+            </button>
+            
+            <button class="action-btn social" id="openSocial">
+                <div class="action-icon">🌟</div>
+                <div class="action-text">Social Feed</div>
+                <div class="action-badge" id="socialBadge">2</div>
             </button>
         </div>
 
-        <!-- Thought Parking Quick Add -->
-        <div class="thought-input-section" id="thoughtInputSection" style="display: none;">
-            <h3>Park a Thought</h3>
-            <textarea id="thoughtInput" placeholder="What's on your mind?"></textarea>
-            <div class="thought-actions">
-                <button class="action-btn primary" id="saveThought">Save</button>
-                <button class="action-btn secondary" id="cancelThought">Cancel</button>
+        <!-- Recent Achievement Popup -->
+        <div class="achievement-popup" id="achievementPopup" style="display: none;">
+            <div class="popup-content">
+                <div class="achievement-icon">🏆</div>
+                <div class="achievement-title">Achievement Unlocked!</div>
+                <div class="achievement-name" id="achievementName">First Focus Session</div>
+                <div class="achievement-reward">+25 XP • +5 Coins</div>
             </div>
         </div>
 
-        <!-- Parked Thoughts Display -->
-        <div class="thoughts-display" id="thoughtsDisplay" style="display: none;">
-            <h3>Parked Thoughts</h3>
-            <div class="thoughts-list" id="thoughtsList"></div>
-            <button class="action-btn secondary" id="closeThoughts">Close</button>
+        <!-- Level Up Celebration -->
+        <div class="level-up-popup" id="levelUpPopup" style="display: none;">
+            <div class="popup-content celebration">
+                <div class="celebration-icon">🎉</div>
+                <div class="celebration-title">LEVEL UP!</div>
+                <div class="celebration-level">Level <span id="newLevel">2</span></div>
+                <div class="celebration-rewards">
+                    <div class="reward-item">+10 Dopamine Coins</div>
+                    <div class="reward-item">New Achievement Unlocked</div>
+                </div>
+                <button class="btn-primary" id="claimRewards">Claim Rewards! 🎁</button>
+            </div>
         </div>
     </div>
 

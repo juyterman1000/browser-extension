@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowState Leaderboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .leaderboard-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .tab-btn.active {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #1a1a1a;
+        }
+        
+        .your-rank {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 2px solid #ffd700;
+        }
+        
+        .rank-title {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+        
+        .rank-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .rank-stat {
+            text-align: center;
+        }
+        
+        .rank-value {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #ffd700;
+        }
+        
+        .rank-label {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+        
+        .leaderboard-list {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .leaderboard-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .leaderboard-item.you {
+            border: 2px solid #ffd700;
+            background: rgba(255, 215, 0, 0.2);
+        }
+        
+        .rank-number {
+            font-size: 1.5em;
+            font-weight: 700;
+            width: 50px;
+            text-align: center;
+        }
+        
+        .rank-number.top3 {
+            color: #ffd700;
+        }
+        
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            margin: 0 16px;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .user-title {
+            opacity: 0.8;
+            font-size: 0.9em;
+        }
+        
+        .user-stats {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+        
+        .stat-label {
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+        
+        .crown {
+            font-size: 1.5em;
+            margin-left: 10px;
+        }
+        
+        .coming-soon {
+            text-align: center;
+            padding: 40px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏆 FlowState Leaderboard</h1>
+            <p>See how you stack up against other ADHD champions!</p>
+        </div>
+
+        <div class="leaderboard-tabs">
+            <button class="tab-btn active" data-tab="weekly">This Week</button>
+            <button class="tab-btn" data-tab="monthly">This Month</button>
+            <button class="tab-btn" data-tab="alltime">All Time</button>
+        </div>
+
+        <div class="your-rank">
+            <div class="rank-title">🌟 Your Current Ranking</div>
+            <div class="rank-stats">
+                <div class="rank-stat">
+                    <div class="rank-value" id="yourRank">#42</div>
+                    <div class="rank-label">Global Rank</div>
+                </div>
+                <div class="rank-stat">
+                    <div class="rank-value" id="yourLevel">12</div>
+                    <div class="rank-label">Level</div>
+                </div>
+                <div class="rank-stat">
+                    <div class="rank-value" id="yourStreak">7</div>
+                    <div class="rank-label">Day Streak</div>
+                </div>
+                <div class="rank-stat">
+                    <div class="rank-value" id="yourFocusTime">145</div>
+                    <div class="rank-label">Focus Hours</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="leaderboard-list">
+            <div class="leaderboard-item">
+                <div class="rank-number top3">1</div>
+                <div class="user-avatar">🧠</div>
+                <div class="user-info">
+                    <div class="user-name">FocusMaster2024</div>
+                    <div class="user-title">ADHD Champion • Level 47</div>
+                </div>
+                <div class="user-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">89</div>
+                        <div class="stat-label">Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2,847</div>
+                        <div class="stat-label">Hours</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">15,420</div>
+                        <div class="stat-label">XP</div>
+                    </div>
+                </div>
+                <div class="crown">👑</div>
+            </div>
+
+            <div class="leaderboard-item">
+                <div class="rank-number top3">2</div>
+                <div class="user-avatar">⚡</div>
+                <div class="user-info">
+                    <div class="user-name">HyperfocusHero</div>
+                    <div class="user-title">Deep Diver • Level 43</div>
+                </div>
+                <div class="user-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">76</div>
+                        <div class="stat-label">Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2,634</div>
+                        <div class="stat-label">Hours</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">14,890</div>
+                        <div class="stat-label">XP</div>
+                    </div>
+                </div>
+                <div class="crown">🥈</div>
+            </div>
+
+            <div class="leaderboard-item">
+                <div class="rank-number top3">3</div>
+                <div class="user-avatar">🚀</div>
+                <div class="user-info">
+                    <div class="user-name">ProductivityPro</div>
+                    <div class="user-title">Focus Veteran • Level 39</div>
+                </div>
+                <div class="user-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">68</div>
+                        <div class="stat-label">Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2,156</div>
+                        <div class="stat-label">Hours</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">13,245</div>
+                        <div class="stat-label">XP</div>
+                    </div>
+                </div>
+                <div class="crown">🥉</div>
+            </div>
+
+            <div class="leaderboard-item">
+                <div class="rank-number">4</div>
+                <div class="user-avatar">🎯</div>
+                <div class="user-info">
+                    <div class="user-name">ADHDWarrior</div>
+                    <div class="user-title">Rising Star • Level 35</div>
+                </div>
+                <div class="user-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">52</div>
+                        <div class="stat-label">Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">1,923</div>
+                        <div class="stat-label">Hours</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">11,780</div>
+                        <div class="stat-label">XP</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="leaderboard-item">
+                <div class="rank-number">5</div>
+                <div class="user-avatar">🌟</div>
+                <div class="user-info">
+                    <div class="user-name">FlowStateNinja</div>
+                    <div class="user-title">Focus Master • Level 32</div>
+                </div>
+                <div class="user-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">45</div>
+                        <div class="stat-label">Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">1,756</div>
+                        <div class="stat-label">Hours</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">10,234</div>
+                        <div class="stat-label">XP</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User's position -->
+            <div style="text-align: center; margin: 20px 0; opacity: 0.7;">
+                <div>...</div>
+            </div>
+
+            <div class="leaderboard-item you">
+                <div class="rank-number">42</div>
+                <div class="user-avatar">👤</div>
+                <div class="user-info">
+                    <div class="user-name">You</div>
+                    <div class="user-title">Getting Started • Level 12</div>
+                </div>
+                <div class="user-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">7</div>
+                        <div class="stat-label">Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">145</div>
+                        <div class="stat-label">Hours</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">1,250</div>
+                        <div class="stat-label">XP</div>
+                    </div>
+                </div>
+                <div class="crown">🎯</div>
+            </div>
+        </div>
+
+        <div class="coming-soon" style="margin-top: 40px;">
+            <h3>🚀 Coming Soon</h3>
+            <p>Team leaderboards, regional rankings, and weekly challenges!</p>
+        </div>
+    </div>
+
+    <script>
+        class LeaderboardPage {
+            constructor() {
+                this.currentTab = 'weekly';
+                this.gameData = null;
+                this.init();
+            }
+
+            async init() {
+                await this.loadGameData();
+                this.setupEventListeners();
+                this.updateYourRank();
+            }
+
+            async loadGameData() {
+                try {
+                    const result = await chrome.storage.local.get(['flowStateGame']);
+                    this.gameData = result.flowStateGame || {
+                        level: 1,
+                        totalXP: 0,
+                        streak: 0,
+                        stats: { totalFocusTime: 0 }
+                    };
+                } catch (error) {
+                    console.error('Error loading game data:', error);
+                    this.gameData = { level: 1, totalXP: 0, streak: 0, stats: { totalFocusTime: 0 } };
+                }
+            }
+
+            setupEventListeners() {
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.switchTab(e.target.dataset.tab);
+                    });
+                });
+            }
+
+            switchTab(tab) {
+                this.currentTab = tab;
+                
+                // Update active tab
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+                
+                // In a real implementation, this would load different leaderboard data
+                console.log(`Switched to ${tab} leaderboard`);
+            }
+
+            updateYourRank() {
+                document.getElementById('yourLevel').textContent = this.gameData.level;
+                document.getElementById('yourStreak').textContent = this.gameData.streak;
+                document.getElementById('yourFocusTime').textContent = Math.floor(this.gameData.stats.totalFocusTime / 60) || 0;
+                
+                // Mock rank calculation based on level and XP
+                const mockRank = Math.max(1, 100 - (this.gameData.level * 2) - Math.floor(this.gameData.totalXP / 100));
+                document.getElementById('yourRank').textContent = `#${mockRank}`;
+                
+                // Update the "You" item in the leaderboard
+                const yourItem = document.querySelector('.leaderboard-item.you');
+                if (yourItem) {
+                    yourItem.querySelector('.rank-number').textContent = mockRank;
+                    yourItem.querySelector('.user-title').textContent = `Level ${this.gameData.level}`;
+                    
+                    const stats = yourItem.querySelectorAll('.stat-value');
+                    stats[0].textContent = this.gameData.streak;
+                    stats[1].textContent = Math.floor(this.gameData.stats.totalFocusTime / 60) || 0;
+                    stats[2].textContent = this.gameData.totalXP || 0;
+                }
+            }
+        }
+
+        // Initialize when DOM loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new LeaderboardPage();
+        });
+    </script>
+</body>
+</html>

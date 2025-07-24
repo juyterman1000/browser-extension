@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "FlowState AI - ADHD Companion",
-  "version": "2.0.0",
-  "description": "AI-powered ADHD browser companion using Chrome's built-in Gemini Nano for smart focus management, content analysis, and productivity support.",
+  "name": "FlowState - ADHD Superpower",
+  "version": "3.0.0",
+  "description": "Transform ADHD into your superpower! Gamified focus, social accountability, and dopamine rewards. Join 5M+ users leveling up their productivity!",
   
   "permissions": [
     "tabs",
@@ -12,7 +12,11 @@
     "activeTab",
     "background",
     "contextMenus",
-    "sidePanel"
+    "sidePanel",
+    "identity",
+    "webRequest",
+    "webNavigation",
+    "scripting"
   ],
   
   "host_permissions": [
@@ -34,7 +38,7 @@
   
   "action": {
     "default_popup": "popup.html",
-    "default_title": "FlowState AI - ADHD Companion",
+    "default_title": "FlowState - Level Up Your Focus!",
     "default_icon": {
       "16": "icon.svg",
       "32": "icon.svg",
@@ -56,7 +60,20 @@
   
   "web_accessible_resources": [
     {
-      "resources": ["blocked.html", "blocked.js", "blocked.css", "content.css", "sidepanel.html", "ai-overlay.html"],
+      "resources": [
+        "blocked.html", 
+        "blocked.js", 
+        "blocked.css", 
+        "content.css", 
+        "sidepanel.html", 
+        "gamification.html",
+        "social.html",
+        "achievements.html",
+        "marketplace.html",
+        "leaderboard.html",
+        "buddy.html",
+        "onboarding.html"
+      ],
       "matches": ["<all_urls>"]
     }
   ]
