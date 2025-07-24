@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "FlowState - ADHD Companion",
-  "version": "1.0.0",
-  "description": "An innovative ADHD-friendly browser extension that works with your brain patterns, not against them.",
+  "name": "FlowState AI - ADHD Companion",
+  "version": "2.0.0",
+  "description": "AI-powered ADHD browser companion using Chrome's built-in Gemini Nano for smart focus management, content analysis, and productivity support.",
   
   "permissions": [
     "tabs",
@@ -10,7 +10,9 @@
     "alarms",
     "notifications",
     "activeTab",
-    "background"
+    "background",
+    "contextMenus",
+    "sidePanel"
   ],
   
   "host_permissions": [
@@ -32,13 +34,17 @@
   
   "action": {
     "default_popup": "popup.html",
-    "default_title": "FlowState - ADHD Companion",
+    "default_title": "FlowState AI - ADHD Companion",
     "default_icon": {
       "16": "icon.svg",
       "32": "icon.svg",
       "48": "icon.svg",
       "128": "icon.svg"
     }
+  },
+  
+  "side_panel": {
+    "default_path": "sidepanel.html"
   },
   
   "icons": {
@@ -50,7 +56,7 @@
   
   "web_accessible_resources": [
     {
-      "resources": ["blocked.html", "blocked.js", "blocked.css", "content.css"],
+      "resources": ["blocked.html", "blocked.js", "blocked.css", "content.css", "sidepanel.html", "ai-overlay.html"],
       "matches": ["<all_urls>"]
     }
   ]

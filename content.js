@@ -1,9 +1,13 @@
-// content.js - Runs on all web pages to provide in-page features
+// content.js - AI-powered content script for FlowState ADHD extension
 
-class FlowStateContent {
+class FlowStateAIContent {
     constructor() {
         this.overlays = new Map();
         this.thoughtCaptureEnabled = false;
+        this.focusMode = false;
+        this.pageAnalysis = null;
+        this.distractingElements = [];
+        this.aiAvailable = false;
         this.init();
     }
 
@@ -11,11 +15,18 @@ class FlowStateContent {
         this.setupMessageListener();
         this.setupKeyboardShortcuts();
         this.checkThoughtCaptureMode();
+        this.startPageAnalysis();
+        this.setupFocusEnhancements();
     }
 
     setupMessageListener() {
         chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-            switch (request.type) {
+            switch (request.action || request.type) {
+                case 'getPageContent':
+                    this.getPageContentForAnalysis().then(content => {
+                        sendResponse({ content });
+                    });
+                    return true; // Keep message channel open
                 case 'showMomentumKeeper':
                     this.showMomentumKeeperOverlay(request.previousActivity, request.currentTab);
                     break;
@@ -30,6 +41,18 @@ class FlowStateContent {
                     break;
                 case 'disableThoughtCapture':
                     this.thoughtCaptureEnabled = false;
+                    break;
+                case 'enterFocusMode':
+                    this.enterFocusMode();
+                    break;
+                case 'exitFocusMode':
+                    this.exitFocusMode();
+                    break;
+                case 'analyzeContent':
+                    this.analyzePageContent();
+                    break;
+                case 'highlightDistractions':
+                    this.highlightDistractions(request.elements);
                     break;
             }
             sendResponse({ success: true });

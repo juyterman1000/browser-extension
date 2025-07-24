@@ -1,6 +1,6 @@
-// background.js - Core service worker for FlowState
+// background.js - AI-powered service worker for FlowState ADHD extension
 
-class FlowStateBackground {
+class FlowStateAI {
     constructor() {
         this.activeTabInfo = {
             tabId: null,
@@ -8,69 +8,126 @@ class FlowStateBackground {
             title: null,
             startTime: null,
             lastActivity: null,
-            domain: null
+            domain: null,
+            contentType: null,
+            distractionLevel: null
         };
 
         this.features = {
-            hyperfocusBreaker: true,
-            momentumKeeper: true,
-            dopamineQueue: true,
-            thoughtParking: true,
-            contextRestoration: true
+            aiContentAnalysis: true,
+            smartFocusBreaker: true,
+            intelligentMomentum: true,
+            aiThoughtParking: true,
+            contextRestoration: true,
+            adaptiveDopamineQueue: true,
+            personalizedCoaching: true
         };
 
         this.settings = {
             hyperfocusThreshold: 45, // minutes
             breakReminder: 5, // minutes
+            aiSensitivity: 'medium', // low, medium, high
+            personalityProfile: 'balanced' // inattentive, hyperactive, combined, balanced
         };
 
-        this.dopamineQueueData = {
-            blockedSites: ['reddit.com', 'youtube.com', 'twitter.com', 'instagram.com', 'facebook.com', 'tiktok.com'],
-            earnedMinutes: 0
-        };
-
+        this.aiSession = null;
+        this.aiAvailable = false;
         this.tabSwitchHistory = [];
         this.hyperfocusTimer = null;
+        this.learningData = {
+            focusPatterns: {},
+            distractionTriggers: [],
+            productiveTimes: [],
+            personalPreferences: {}
+        };
 
         this.init();
     }
 
     async init() {
         await this.loadSettings();
+        await this.initializeAI();
         this.setupEventListeners();
         this.startActivityMonitoring();
+        this.setupContextMenus();
+    }
+
+    async initializeAI() {
+        try {
+            // Check if Chrome's built-in AI is available
+            if ('ai' in window && 'languageModel' in window.ai) {
+                const availability = await window.ai.languageModel.capabilities();
+                console.log('AI Availability:', availability);
+                
+                if (availability.available === 'readily') {
+                    this.aiSession = await window.ai.languageModel.create({
+                        systemPrompt: `You are FlowState AI, an ADHD-specialized assistant. Your responses should be:
+                        - Supportive and understanding of ADHD challenges
+                        - Practical and actionable
+                        - Celebratory of ADHD strengths like creativity and hyperfocus
+                        - Non-judgmental about distractions or task-switching
+                        - Brief but encouraging (ADHD brains appreciate conciseness)
+                        
+                        Context: You help with focus management, content analysis, and productivity for neurodivergent users.`
+                    });
+                    this.aiAvailable = true;
+                    console.log('FlowState AI initialized successfully');
+                } else {
+                    console.log('AI not readily available, falling back to rule-based assistance');
+                    this.aiAvailable = false;
+                }
+            } else {
+                console.log('Chrome built-in AI not supported');
+                this.aiAvailable = false;
+            }
+        } catch (error) {
+            console.error('AI initialization failed:', error);
+            this.aiAvailable = false;
+        }
     }
 
     async loadSettings() {
         const saved = await chrome.storage.sync.get({
-            hyperfocusBreaker: true,
-            momentumKeeper: true,
-            dopamineQueue: true,
-            thoughtParking: true,
+            aiContentAnalysis: true,
+            smartFocusBreaker: true,
+            intelligentMomentum: true,
+            aiThoughtParking: true,
             contextRestoration: true,
+            adaptiveDopamineQueue: true,
+            personalizedCoaching: true,
             hyperfocusThreshold: 45,
-            breakReminder: 5
+            breakReminder: 5,
+            aiSensitivity: 'medium',
+            personalityProfile: 'balanced'
         });
 
-        this.features = {
-            hyperfocusBreaker: saved.hyperfocusBreaker,
-            momentumKeeper: saved.momentumKeeper,
-            dopamineQueue: saved.dopamineQueue,
-            thoughtParking: saved.thoughtParking,
-            contextRestoration: saved.contextRestoration
-        };
-
+        this.features = { ...saved };
         this.settings = {
             hyperfocusThreshold: saved.hyperfocusThreshold,
-            breakReminder: saved.breakReminder
+            breakReminder: saved.breakReminder,
+            aiSensitivity: saved.aiSensitivity,
+            personalityProfile: saved.personalityProfile
         };
 
-        // Load dopamine queue data
-        const dopamineData = await chrome.storage.local.get(['dopamineMinutes', 'blockedSites']);
-        this.dopamineQueueData.earnedMinutes = dopamineData.dopamineMinutes || 0;
-        if (dopamineData.blockedSites) {
-            this.dopamineQueueData.blockedSites = dopamineData.blockedSites;
+        // Load learning data
+        const learningData = await chrome.storage.local.get(['learningData']);
+        if (learningData.learningData) {
+            this.learningData = { ...this.learningData, ...learningData.learningData };
         }
+    }
+
+    setupContextMenus() {
+        chrome.contextMenus.create({
+            id: 'ai-analyze-content',
+            title: 'Analyze with FlowState AI',
+            contexts: ['page', 'selection']
+        });
+
+        chrome.contextMenus.create({
+            id: 'park-thought',
+            title: 'Park This Thought',
+            contexts: ['selection']
+        });
     }
 
     setupEventListeners() {

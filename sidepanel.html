@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowState AI - ADHD Assistant</title>
+    <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+    <div class="ai-panel">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                    <path d="M8 12l2 2 4-4" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <h1>FlowState AI</h1>
+            </div>
+            <div class="ai-status" id="aiStatus">
+                <div class="status-dot"></div>
+                <span id="aiStatusText">Initializing...</span>
+            </div>
+        </div>
+
+        <!-- AI Coach Section -->
+        <div class="ai-coach-section">
+            <h2>🧠 Your ADHD Coach</h2>
+            <div class="coach-message" id="coachMessage">
+                <p>Hi! I'm analyzing your browsing patterns to provide personalized ADHD support...</p>
+            </div>
+            
+            <div class="quick-actions">
+                <button class="action-btn" id="analyzeCurrentPage">📊 Analyze This Page</button>
+                <button class="action-btn" id="requestBreak">⏰ Smart Break Suggestion</button>
+                <button class="action-btn" id="focusMode">🎯 Enter Focus Mode</button>
+            </div>
+        </div>
+
+        <!-- Content Analysis -->
+        <div class="content-analysis">
+            <h3>📄 Current Page Analysis</h3>
+            <div class="analysis-result" id="analysisResult">
+                <div class="metric">
+                    <span class="label">Distraction Level:</span>
+                    <div class="progress-bar">
+                        <div class="progress" id="distractionLevel"></div>
+                    </div>
+                </div>
+                <div class="metric">
+                    <span class="label">ADHD Friendliness:</span>
+                    <div class="progress-bar">
+                        <div class="progress" id="adhdFriendliness"></div>
+                    </div>
+                </div>
+                <div class="content-suggestions" id="contentSuggestions"></div>
+            </div>
+        </div>
+
+        <!-- Thought Parking with AI -->
+        <div class="thought-parking">
+            <h3>🚗 AI-Powered Thought Parking</h3>
+            <div class="thought-input-container">
+                <textarea id="thoughtInput" placeholder="What's racing through your mind? AI will help organize it..."></textarea>
+                <div class="thought-actions">
+                    <button class="btn-primary" id="parkThought">🧠 AI Park & Organize</button>
+                    <button class="btn-secondary" id="clearThought">Clear</button>
+                </div>
+            </div>
+            
+            <div class="parked-thoughts" id="parkedThoughts">
+                <h4>Recently Parked:</h4>
+                <div class="thoughts-list" id="thoughtsList"></div>
+            </div>
+        </div>
+
+        <!-- Focus Insights -->
+        <div class="focus-insights">
+            <h3>📈 AI Focus Insights</h3>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-value" id="focusScore">--</div>
+                    <div class="insight-label">Focus Score</div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-value" id="hyperfocusRisk">--</div>
+                    <div class="insight-label">Hyperfocus Risk</div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-value" id="energyLevel">--</div>
+                    <div class="insight-label">Energy Level</div>
+                </div>
+            </div>
+            
+            <div class="ai-recommendations" id="aiRecommendations">
+                <h4>💡 Personalized Recommendations</h4>
+                <div class="recommendations-list" id="recommendationsList"></div>
+            </div>
+        </div>
+
+        <!-- Context Restoration -->
+        <div class="context-section">
+            <h3>🔄 Smart Context Restoration</h3>
+            <div class="context-actions">
+                <button class="btn-primary" id="saveContext">💾 Save Current Context</button>
+                <button class="btn-secondary" id="restoreContext">📂 Restore Last Context</button>
+            </div>
+            <div class="saved-contexts" id="savedContexts"></div>
+        </div>
+
+        <!-- AI Chat Interface -->
+        <div class="ai-chat">
+            <h3>💬 Chat with FlowState AI</h3>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="Ask about ADHD strategies, focus tips, or anything...">
+                <button id="sendChat">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="sidepanel.js"></script>
+</body>
+</html>
