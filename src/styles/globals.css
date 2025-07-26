@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom scrollbar for ADHD-friendly design */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* ADHD-friendly focus styles */
+*:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* Smooth animations for better UX */
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Custom animations */
+@keyframes xpGain {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-30px) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes bounce-slow {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes pulse-fast {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Utility classes */
+.animate-xp-gain {
+  animation: xpGain 1s ease-out forwards;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s infinite;
+}
+
+.animate-pulse-fast {
+  animation: pulse-fast 1s infinite;
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ADHD-friendly button styles */
+.btn-adhd {
+  @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+}
+
+.btn-primary {
+  @apply btn-adhd bg-primary-500 hover:bg-primary-600 text-white;
+}
+
+.btn-secondary {
+  @apply btn-adhd bg-gray-200 hover:bg-gray-300 text-gray-800;
+}
+
+.btn-success {
+  @apply btn-adhd bg-green-500 hover:bg-green-600 text-white;
+}
+
+.btn-warning {
+  @apply btn-adhd bg-yellow-500 hover:bg-yellow-600 text-white;
+}
+
+.btn-danger {
+  @apply btn-adhd bg-red-500 hover:bg-red-600 text-white;
+}
+
+/* Card styles */
+.card {
+  @apply bg-white rounded-xl shadow-lg border border-gray-200 p-6;
+}
+
+.card-dark {
+  @apply bg-gray-800 rounded-xl shadow-lg border border-gray-700 p-6 text-white;
+}
+
+/* Input styles */
+.input-adhd {
+  @apply w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors;
+}
+
+/* Progress bar styles */
+.progress-bar {
+  @apply w-full bg-gray-200 rounded-full overflow-hidden;
+}
+
+.progress-fill {
+  @apply h-full bg-gradient-to-r from-primary-500 to-primary-600 rounded-full transition-all duration-300;
+}
+
+/* Notification styles */
+.notification {
+  @apply fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 max-w-sm;
+}
+
+.notification-success {
+  @apply notification bg-green-500 text-white;
+}
+
+.notification-error {
+  @apply notification bg-red-500 text-white;
+}
+
+.notification-warning {
+  @apply notification bg-yellow-500 text-black;
+}
+
+.notification-info {
+  @apply notification bg-blue-500 text-white;
+}
+
+/* Loading spinner */
+.spinner {
+  @apply inline-block w-4 h-4 border-2 border-gray-300 border-t-primary-500 rounded-full animate-spin;
+}
+
+/* Responsive design helpers */
+@media (max-width: 640px) {
+  .mobile-hidden {
+    display: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card, .card-dark {
+    @apply border-2;
+  }
+  
+  .btn-adhd {
+    @apply border-2 border-current;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
