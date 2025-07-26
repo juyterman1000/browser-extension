@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowState Analytics - ADHD Insights</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .premium-badge {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #1a1a1a;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+        
+        .time-selector {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .time-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .time-btn.active {
+            background: linear-gradient(45deg, #00f5ff, #0080ff);
+        }
+        
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .analytics-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .card-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #00f5ff;
+            margin-bottom: 8px;
+        }
+        
+        .metric-label {
+            opacity: 0.8;
+            margin-bottom: 16px;
+        }
+        
+        .metric-change {
+            font-size: 0.9em;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        
+        .metric-change.positive {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+        
+        .metric-change.negative {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+        
+        .chart-container {
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 16px;
+        }
+        
+        .chart-placeholder {
+            opacity: 0.6;
+            text-align: center;
+        }
+        
+        .insights-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
+        }
+        
+        .insights-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .insight-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-left: 4px solid #00f5ff;
+        }
+        
+        .insight-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .insight-description {
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+        
+        .patterns-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+        
+        .pattern-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .pattern-icon {
+            font-size: 2em;
+            margin-bottom: 12px;
+        }
+        
+        .pattern-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .pattern-description {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .upgrade-prompt {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 237, 78, 0.1));
+            border: 2px solid #ffd700;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .upgrade-btn {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #1a1a1a;
+            border: none;
+            border-radius: 12px;
+            padding: 16px 32px;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .upgrade-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 FlowState Analytics</h1>
+            <div class="premium-badge">PREMIUM FEATURE</div>
+            <p>Deep insights into your ADHD productivity patterns</p>
+        </div>
+
+        <div class="time-selector">
+            <button class="time-btn active" data-period="week">This Week</button>
+            <button class="time-btn" data-period="month">This Month</button>
+            <button class="time-btn" data-period="quarter">3 Months</button>
+            <button class="time-btn" data-period="year">This Year</button>
+        </div>
+
+        <div class="analytics-grid">
+            <div class="analytics-card">
+                <div class="card-title">
+                    <span>🎯</span>
+                    <span>Focus Performance</span>
+                </div>
+                <div class="metric-value" id="focusScore">87</div>
+                <div class="metric-label">Focus Score</div>
+                <div class="metric-change positive">+12% from last week</div>
+                <div class="chart-container">
+                    <div class="chart-placeholder">📈 Focus trend chart</div>
+                </div>
+            </div>
+
+            <div class="analytics-card">
+                <div class="card-title">
+                    <span>⏱️</span>
+                    <span>Total Focus Time</span>
+                </div>
+                <div class="metric-value" id="totalFocusTime">24.5h</div>
+                <div class="metric-label">This Week</div>
+                <div class="metric-change positive">+3.2h from last week</div>
+                <div class="chart-container">
+                    <div class="chart-placeholder">📊 Daily focus time</div>
+                </div>
+            </div>
+
+            <div class="analytics-card">
+                <div class="card-title">
+                    <span>🔥</span>
+                    <span>Streak Analysis</span>
+                </div>
+                <div class="metric-value" id="currentStreak">12</div>
+                <div class="metric-label">Current Streak (days)</div>
+                <div class="metric-change positive">Best streak: 28 days</div>
+                <div class="chart-container">
+                    <div class="chart-placeholder">📅 Streak calendar</div>
+                </div>
+            </div>
+
+            <div class="analytics-card">
+                <div class="card-title">
+                    <span>🧠</span>
+                    <span>ADHD Patterns</span>
+                </div>
+                <div class="metric-value" id="adhdScore">Good</div>
+                <div class="metric-label">Pattern Recognition</div>
+                <div class="metric-change positive">Improving trends</div>
+                <div class="chart-container">
+                    <div class="chart-placeholder">🔍 Pattern analysis</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="insights-section">
+            <div class="insights-title">🤖 AI-Powered Insights</div>
+            
+            <div class="insight-item">
+                <div class="insight-title">🌅 Peak Performance Window</div>
+                <div class="insight-description">
+                    Your focus is strongest between 9:00 AM - 11:30 AM. Schedule your most important tasks during this window for maximum productivity.
+                </div>
+            </div>
+
+            <div class="insight-item">
+                <div class="insight-title">⚡ Hyperfocus Pattern Detected</div>
+                <div class="insight-description">
+                    You tend to hyperfocus on Tuesdays and Thursdays. Consider setting 90-minute break reminders on these days to maintain healthy work patterns.
+                </div>
+            </div>
+
+            <div class="insight-item">
+                <div class="insight-title">🎯 Optimal Session Length</div>
+                <div class="insight-description">
+                    Your sweet spot is 45-minute focus sessions. Sessions longer than 60 minutes show diminishing returns in your productivity metrics.
+                </div>
+            </div>
+
+            <div class="insight-item">
+                <div class="insight-title">📱 Distraction Triggers</div>
+                <div class="insight-description">
+                    Social media distractions peak around 2:00 PM and 7:00 PM. Consider using focus mode during these times or scheduling breaks instead.
+                </div>
+            </div>
+        </div>
+
+        <div class="insights-section">
+            <div class="insights-title">🧩 ADHD Success Patterns</div>
+            
+            <div class="patterns-grid">
+                <div class="pattern-card">
+                    <div class="pattern-icon">🎵</div>
+                    <div class="pattern-title">Music Boost</div>
+                    <div class="pattern-description">
+                        Focus sessions with background music are 23% longer on average
+                    </div>
+                </div>
+
+                <div class="pattern-card">
+                    <div class="pattern-icon">🤝</div>
+                    <div class="pattern-title">Buddy Effect</div>
+                    <div class="pattern-description">
+                        Days with buddy check-ins show 31% better streak maintenance
+                    </div>
+                </div>
+
+                <div class="pattern-card">
+                    <div class="pattern-icon">🏆</div>
+                    <div class="pattern-title">Achievement Drive</div>
+                    <div class="pattern-description">
+                        You're most motivated by streak-based achievements (+40% engagement)
+                    </div>
+                </div>
+
+                <div class="pattern-card">
+                    <div class="pattern-icon">💭</div>
+                    <div class="pattern-title">Thought Parking</div>
+                    <div class="pattern-description">
+                        Sessions with thought parking have 18% fewer interruptions
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="upgrade-prompt" id="upgradePrompt" style="display: none;">
+            <h2>🚀 Unlock Advanced Analytics</h2>
+            <p>Get deeper insights, custom reports, and AI-powered recommendations to optimize your ADHD productivity patterns.</p>
+            
+            <div style="margin: 20px 0;">
+                <div>✨ Detailed productivity heatmaps</div>
+                <div>🧠 Personalized ADHD coaching insights</div>
+                <div>📊 Custom dashboard creation</div>
+                <div>🎯 Goal tracking and predictions</div>
+                <div>📈 Comparative analysis with similar users</div>
+            </div>
+            
+            <button class="upgrade-btn" onclick="upgradeToPremium()">
+                Upgrade to Premium Analytics
+            </button>
+        </div>
+    </div>
+
+    <script>
+        class FlowStateAnalytics {
+            constructor() {
+                this.currentPeriod = 'week';
+                this.gameData = null;
+                this.init();
+            }
+
+            async init() {
+                await this.loadGameData();
+                this.setupEventListeners();
+                this.updateAnalytics();
+                this.checkPremiumStatus();
+            }
+
+            async loadGameData() {
+                try {
+                    const result = await chrome.storage.local.get(['flowStateGame']);
+                    this.gameData = result.flowStateGame || {
+                        level: 1,
+                        totalXP: 0,
+                        streak: 0,
+                        stats: { totalFocusTime: 0, sessionsCompleted: 0 },
+                        subscription: { tier: 'free' }
+                    };
+                } catch (error) {
+                    console.error('Error loading game data:', error);
+                    this.gameData = { subscription: { tier: 'free' } };
+                }
+            }
+
+            setupEventListeners() {
+                document.querySelectorAll('.time-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.switchPeriod(e.target.dataset.period);
+                    });
+                });
+            }
+
+            switchPeriod(period) {
+                this.currentPeriod = period;
+                
+                // Update active button
+                document.querySelectorAll('.time-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-period="${period}"]`).classList.add('active');
+                
+                this.updateAnalytics();
+            }
+
+            updateAnalytics() {
+                // Update metrics based on current period and game data
+                const focusHours = Math.floor(this.gameData.stats?.totalFocusTime / 60) || 0;
+                const focusScore = Math.min(100, Math.floor((this.gameData.level * 10) + (this.gameData.streak * 2)));
+                
+                document.getElementById('focusScore').textContent = focusScore;
+                document.getElementById('totalFocusTime').textContent = `${focusHours}h`;
+                document.getElementById('currentStreak').textContent = this.gameData.streak || 0;
+                
+                // Update ADHD score based on various factors
+                const adhdScore = this.calculateADHDScore();
+                document.getElementById('adhdScore').textContent = adhdScore;
+            }
+
+            calculateADHDScore() {
+                const streak = this.gameData.streak || 0;
+                const level = this.gameData.level || 1;
+                const sessions = this.gameData.stats?.sessionsCompleted || 0;
+                
+                if (streak >= 30 && level >= 20) return 'Excellent';
+                if (streak >= 14 && level >= 10) return 'Great';
+                if (streak >= 7 && level >= 5) return 'Good';
+                if (streak >= 3) return 'Improving';
+                return 'Getting Started';
+            }
+
+            checkPremiumStatus() {
+                if (this.gameData.subscription?.tier === 'free') {
+                    document.getElementById('upgradePrompt').style.display = 'block';
+                    
+                    // Blur some premium content
+                    document.querySelectorAll('.chart-container').forEach(chart => {
+                        chart.style.filter = 'blur(4px)';
+                        chart.style.opacity = '0.5';
+                    });
+                }
+            }
+        }
+
+        function upgradeToPremium() {
+            chrome.tabs.create({ url: chrome.runtime.getURL('premium.html') });
+        }
+
+        // Initialize when DOM loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new FlowStateAnalytics();
+        });
+    </script>
+</body>
+</html>

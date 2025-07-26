@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowState Settings - ADHD Customization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .settings-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-btn.active {
+            background: linear-gradient(45deg, #00f5ff, #0080ff);
+        }
+        
+        .settings-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+        
+        .setting-info {
+            flex: 1;
+        }
+        
+        .setting-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .setting-description {
+            font-size: 0.9em;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+        
+        .setting-control {
+            margin-left: 20px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-switch.active {
+            background: #00f5ff;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(26px);
+        }
+        
+        .select-control {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .select-control option {
+            background: #2a2a2a;
+            color: white;
+        }
+        
+        .range-control {
+            width: 120px;
+            margin-left: 10px;
+        }
+        
+        .range-value {
+            font-weight: 600;
+            margin-left: 10px;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-small {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s ease;
+        }
+        
+        .btn-small:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #00f5ff, #0080ff);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+        }
+        
+        .premium-feature {
+            opacity: 0.6;
+            position: relative;
+        }
+        
+        .premium-badge {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #1a1a1a;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .data-section {
+            text-align: center;
+        }
+        
+        .data-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+        
+        .data-stat {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 16px;
+            border-radius: 8px;
+        }
+        
+        .data-value {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #00f5ff;
+        }
+        
+        .data-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .danger-zone {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .danger-title {
+            color: #ff6b6b;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚙️ FlowState Settings</h1>
+            <p>Customize your ADHD productivity experience</p>
+        </div>
+
+        <div class="settings-nav">
+            <button class="nav-btn active" data-section="general">General</button>
+            <button class="nav-btn" data-section="focus">Focus & Sessions</button>
+            <button class="nav-btn" data-section="adhd">ADHD Tools</button>
+            <button class="nav-btn" data-section="social">Social & Sharing</button>
+            <button class="nav-btn" data-section="notifications">Notifications</button>
+            <button class="nav-btn" data-section="data">Data & Privacy</button>
+        </div>
+
+        <!-- General Settings -->
+        <div class="settings-section" id="general-section">
+            <div class="section-title">
+                <span>🎨</span>
+                <span>General Preferences</span>
+            </div>
+            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Theme</div>
+                    <div class="setting-description">Choose your preferred visual theme</div>
+                </div>
+                <div class="setting-control">
+                    <select class="select-control" id="themeSelect">
+                        <option value="dark">Dark (ADHD Friendly)</option>
+                        <option value="light">Light</option>
+                        <option value="auto">Auto (System)</option>
+                        <option value="high-contrast">High Contrast</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Sounds & Audio</div>
+                    <div class="setting-description">Enable sound effects for achievements and notifications</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch" id="soundsToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Animations</div>
+                    <div class="setting-description">Enable celebratory animations and transitions</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch active" id="animationsToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Language</div>
+                    <div class="setting-description">Choose your preferred language</div>
+                </div>
+                <div class="setting-control">
+                    <select class="select-control" id="languageSelect">
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                        <option value="pt">Português</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Focus & Sessions Settings -->
+        <div class="settings-section" id="focus-section" style="display: none;">
+            <div class="section-title">
+                <span>🎯</span>
+                <span>Focus & Sessions</span>
+            </div>
+            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Default Session Length</div>
+                    <div class="setting-description">Your preferred focus session duration</div>
+                </div>
+                <div class="setting-control">
+                    <input type="range" class="range-control" id="defaultSessionLength" min="15" max="120" value="25" step="5">
+                    <span class="range-value" id="sessionLengthValue">25 min</span>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Auto-start Sessions</div>
+                    <div class="setting-description">Automatically start focus sessions when visiting productive sites</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch" id="autoStartToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Variable Rewards</div>
+                    <div class="setting-description">Enable random bonus XP drops during focus sessions</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch active" id="variableRewardsToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Focus Multiplier Cap</div>
+                    <div class="setting-description">Maximum XP multiplier during long sessions</div>
+                </div>
+                <div class="setting-control">
+                    <input type="range" class="range-control" id="multiplierCap" min="2" max="10" value="10" step="1">
+                    <span class="range-value" id="multiplierCapValue">10x</span>
+                </div>
+            </div>
+
+            <div class="setting-item premium-feature">
+                <div class="setting-info">
+                    <div class="setting-title">Custom Session Goals</div>
+                    <div class="setting-description">Set personalized goals for each focus session</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch" id="customGoalsToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                    <span class="premium-badge">PRO</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ADHD Tools Settings -->
+        <div class="settings-section" id="adhd-section" style="display: none;">
+            <div class="section-title">
+                <span>🧠</span>
+                <span>ADHD-Specific Tools</span>
+            </div>
+            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Hyperfocus Protection</div>
+                    <div class="setting-description">Get gentle reminders to take breaks during long focus sessions</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch active" id="hyperfocusToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Break Reminder Time</div>
+                    <div class="setting-description">When to show hyperfocus break reminders</div>
+                </div>
+                <div class="setting-control">
+                    <input type="range" class="range-control" id="breakReminderTime" min="60" max="180" value="90" step="15">
+                    <span class="range-value" id="breakReminderValue">90 min</span>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Thought Parking Shortcut</div>
+                    <div class="setting-description">Enable Ctrl+Shift+T for quick thought capture</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch active" id="thoughtShortcutToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Context Auto-Save</div>
+                    <div class="setting-description">Automatically save browser contexts every hour</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch" id="contextAutoSaveToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Distraction Blocking</div>
+                    <div class="setting-description">Block distracting websites during focus sessions</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch active" id="distractionBlockingToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Manage Blocked Sites</div>
+                    <div class="setting-description">Customize which sites are blocked during focus time</div>
+                </div>
+                <div class="setting-control">
+                    <button class="btn-small btn-primary" id="manageBlockedSites">Manage List</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Social & Sharing Settings -->
+        <div class="settings-section" id="social-section" style="display: none;">
+            <div class="section-title">
+                <span>🌟</span>
+                <span>Social & Sharing</span>
+            </div>
+            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Auto-Share Achievements</div>
+                    <div class="setting-description">Automatically suggest sharing major achievements</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch" id="autoShareToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Buddy Notifications</div>
+                    <div class="setting-description">Get notified when your ADHD buddy is active</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch active" id="buddyNotificationsToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Leaderboard Participation</div>
+                    <div class="setting-description">Show your progress on community leaderboards</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch active" id="leaderboardToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item premium-feature">
+                <div class="setting-info">
+                    <div class="setting-title">Multiple ADHD Buddies</div>
+                    <div class="setting-description">Connect with up to 5 accountability partners</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch" id="multipleBuddiesToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                    <span class="premium-badge">PRO</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications Settings -->
+        <div class="settings-section" id="notifications-section" style="display: none;">
+            <div class="section-title">
+                <span>🔔</span>
+                <span>Notifications</span>
+            </div>
+            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">All Notifications</div>
+                    <div class="setting-description">Master toggle for all FlowState notifications</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch active" id="allNotificationsToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Achievement Notifications</div>
+                    <div class="setting-description">Get notified when you unlock new achievements</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch active" id="achievementNotificationsToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Daily Challenge Reminders</div>
+                    <div class="setting-description">Morning reminders about your daily challenge</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch active" id="challengeRemindersToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Streak Warnings</div>
+                    <div class="setting-description">Get warned before your streak is about to break</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch active" id="streakWarningsToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Notification Timing</div>
+                    <div class="setting-description">When to show notifications</div>
+                </div>
+                <div class="setting-control">
+                    <select class="select-control" id="notificationTiming">
+                        <option value="immediate">Immediate</option>
+                        <option value="batched">Batched (every 30 min)</option>
+                        <option value="quiet-hours">Respect quiet hours</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data & Privacy Settings -->
+        <div class="settings-section" id="data-section" style="display: none;">
+            <div class="section-title">
+                <span>🔒</span>
+                <span>Data & Privacy</span>
+            </div>
+            
+            <div class="data-section">
+                <p>Your FlowState data overview:</p>
+                
+                <div class="data-stats">
+                    <div class="data-stat">
+                        <div class="data-value" id="totalSessions">0</div>
+                        <div class="data-label">Focus Sessions</div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="data-value" id="totalAchievements">0</div>
+                        <div class="data-label">Achievements</div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="data-value" id="totalThoughts">0</div>
+                        <div class="data-label">Parked Thoughts</div>
+                    </div>
+                    <div class="data-stat">
+                        <div class="data-value" id="dataSize">0 KB</div>
+                        <div class="data-label">Storage Used</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Analytics Collection</div>
+                    <div class="setting-description">Help improve FlowState by sharing anonymous usage data</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch active" id="analyticsToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Data Sync</div>
+                    <div class="setting-description">Sync your data across devices (Premium feature)</div>
+                </div>
+                <div class="setting-control">
+                    <div class="toggle-switch" id="dataSyncToggle">
+                        <div class="toggle-slider"></div>
+                    </div>
+                    <span class="premium-badge">PRO</span>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">Export Data</div>
+                    <div class="setting-description">Download all your FlowState data</div>
+                </div>
+                <div class="setting-control">
+                    <button class="btn-small btn-primary" id="exportData">Export</button>
+                </div>
+            </div>
+
+            <div class="danger-zone">
+                <div class="danger-title">⚠️ Danger Zone</div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <div class="setting-title">Reset All Data</div>
+                        <div class="setting-description">Permanently delete all your FlowState data and start fresh</div>
+                    </div>
+                    <div class="setting-control">
+                        <button class="btn-small btn-danger" id="resetAllData">Reset Everything</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class FlowStateSettings {
+            constructor() {
+                this.gameData = null;
+                this.currentSection = 'general';
+                this.init();
+            }
+
+            async init() {
+                await this.loadGameData();
+                this.setupEventListeners();
+                this.loadSettings();
+                this.updateDataStats();
+            }
+
+            async loadGameData() {
+                try {
+                    const result = await chrome.storage.local.get(['flowStateGame']);
+                    this.gameData = result.flowStateGame || {
+                        preferences: {},
+                        stats: {},
+                        achievements: []
+                    };
+                } catch (error) {
+                    console.error('Error loading game data:', error);
+                    this.gameData = { preferences: {}, stats: {}, achievements: [] };
+                }
+            }
+
+            setupEventListeners() {
+                // Navigation
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.switchSection(e.target.dataset.section);
+                    });
+                });
+
+                // Toggle switches
+                document.querySelectorAll('.toggle-switch').forEach(toggle => {
+                    toggle.addEventListener('click', (e) => {
+                        this.toggleSetting(e.currentTarget);
+                    });
+                });
+
+                // Range inputs
+                document.querySelectorAll('.range-control').forEach(range => {
+                    range.addEventListener('input', (e) => {
+                        this.updateRangeValue(e.target);
+                    });
+                });
+
+                // Select controls
+                document.querySelectorAll('.select-control').forEach(select => {
+                    select.addEventListener('change', (e) => {
+                        this.updateSelectSetting(e.target);
+                    });
+                });
+
+                // Buttons
+                document.getElementById('exportData')?.addEventListener('click', () => this.exportData());
+                document.getElementById('resetAllData')?.addEventListener('click', () => this.resetAllData());
+                document.getElementById('manageBlockedSites')?.addEventListener('click', () => this.manageBlockedSites());
+            }
+
+            switchSection(section) {
+                this.currentSection = section;
+                
+                // Update navigation
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-section="${section}"]`).classList.add('active');
+                
+                // Show/hide sections
+                document.querySelectorAll('.settings-section').forEach(sec => {
+                    sec.style.display = 'none';
+                });
+                document.getElementById(`${section}-section`).style.display = 'block';
+            }
+
+            toggleSetting(toggleElement) {
+                const isActive = toggleElement.classList.contains('active');
+                
+                if (isActive) {
+                    toggleElement.classList.remove('active');
+                } else {
+                    toggleElement.classList.add('active');
+                }
+                
+                // Save setting
+                const settingId = toggleElement.id.replace('Toggle', '');
+                this.saveSetting(settingId, !isActive);
+            }
+
+            updateRangeValue(rangeElement) {
+                const value = rangeElement.value;
+                const valueElement = document.getElementById(rangeElement.id.replace('Control', 'Value') || rangeElement.id + 'Value');
+                
+                if (valueElement) {
+                    if (rangeElement.id === 'defaultSessionLength' || rangeElement.id === 'breakReminderTime') {
+                        valueElement.textContent = `${value} min`;
+                    } else if (rangeElement.id === 'multiplierCap') {
+                        valueElement.textContent = `${value}x`;
+                    } else {
+                        valueElement.textContent = value;
+                    }
+                }
+                
+                // Save setting
+                const settingId = rangeElement.id;
+                this.saveSetting(settingId, parseInt(value));
+            }
+
+            updateSelectSetting(selectElement) {
+                const value = selectElement.value;
+                const settingId = selectElement.id.replace('Select', '');
+                this.saveSetting(settingId, value);
+            }
+
+            async saveSetting(key, value) {
+                if (!this.gameData.preferences) {
+                    this.gameData.preferences = {};
+                }
+                
+                this.gameData.preferences[key] = value;
+                
+                try {
+                    await chrome.storage.local.set({ flowStateGame: this.gameData });
+                    
+                    // Notify background script of setting change
+                    chrome.runtime.sendMessage({
+                        type: 'updateSettings',
+                        settings: { [key]: value }
+                    });
+                    
+                } catch (error) {
+                    console.error('Error saving setting:', error);
+                }
+            }
+
+            loadSettings() {
+                const preferences = this.gameData.preferences || {};
+                
+                // Load toggle states
+                Object.keys(preferences).forEach(key => {
+                    const toggleElement = document.getElementById(key + 'Toggle');
+                    if (toggleElement && typeof preferences[key] === 'boolean') {
+                        if (preferences[key]) {
+                            toggleElement.classList.add('active');
+                        } else {
+                            toggleElement.classList.remove('active');
+                        }
+                    }
+                    
+                    // Load range values
+                    const rangeElement = document.getElementById(key);
+                    if (rangeElement && typeof preferences[key] === 'number') {
+                        rangeElement.value = preferences[key];
+                        this.updateRangeValue(rangeElement);
+                    }
+                    
+                    // Load select values
+                    const selectElement = document.getElementById(key + 'Select');
+                    if (selectElement && typeof preferences[key] === 'string') {
+                        selectElement.value = preferences[key];
+                    }
+                });
+            }
+
+            updateDataStats() {
+                const stats = this.gameData.stats || {};
+                const achievements = this.gameData.achievements || [];
+                
+                document.getElementById('totalSessions').textContent = stats.sessionsCompleted || 0;
+                document.getElementById('totalAchievements').textContent = achievements.length;
+                document.getElementById('totalThoughts').textContent = stats.thoughtsParked || 0;
+                
+                // Calculate approximate data size
+                const dataSize = JSON.stringify(this.gameData).length;
+                document.getElementById('dataSize').textContent = `${Math.round(dataSize / 1024)} KB`;
+            }
+
+            async exportData() {
+                try {
+                    const dataBlob = new Blob([JSON.stringify(this.gameData, null, 2)], {
+                        type: 'application/json'
+                    });
+                    
+                    const url = URL.createObjectURL(dataBlob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `flowstate-data-${new Date().toISOString().split('T')[0]}.json`;
+                    a.click();
+                    
+                    URL.revokeObjectURL(url);
+                    
+                    this.showNotification('Data exported successfully!', 'success');
+                    
+                } catch (error) {
+                    console.error('Export failed:', error);
+                    this.showNotification('Export failed. Please try again.', 'error');
+                }
+            }
+
+            async resetAllData() {
+                const confirmed = confirm(
+                    'Are you sure you want to reset ALL your FlowState data? This action cannot be undone.\n\n' +
+                    'This will delete:\n' +
+                    '• All focus session history\n' +
+                    '• All achievements and progress\n' +
+                    '• All parked thoughts\n' +
+                    '• All saved contexts\n' +
+                    '• All settings and preferences'
+                );
+                
+                if (!confirmed) return;
+                
+                const doubleConfirm = confirm('This is your final warning. Are you absolutely sure?');
+                if (!doubleConfirm) return;
+                
+                try {
+                    await chrome.storage.local.clear();
+                    await chrome.storage.sync.clear();
+                    
+                    this.showNotification('All data has been reset. Reloading...', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                    
+                } catch (error) {
+                    console.error('Reset failed:', error);
+                    this.showNotification('Reset failed. Please try again.', 'error');
+                }
+            }
+
+            manageBlockedSites() {
+                // This would open a modal or new page for managing blocked sites
+                this.showNotification('Blocked sites management coming soon!', 'info');
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    padding: 12px 16px;
+                    background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
+                    color: white;
+                    border-radius: 8px;
+                    font-weight: 600;
+                    z-index: 1000;
+                    animation: slideIn 0.3s ease;
+                `;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            }
+        }
+
+        // Initialize when DOM loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new FlowStateSettings();
+        });
+    </script>
+</body>
+</html>
