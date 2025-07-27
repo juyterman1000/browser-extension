@@ -15,6 +15,12 @@ interface GameStore extends GameData {
   setBuddy: (buddy: Buddy | null) => void;
   levelUp: () => void;
   
+  // ADHD-specific methods
+  awardXP: (amount: number, reason?: string) => void;
+  awardDopamineCoins: (amount: number, reason?: string) => void;
+  updateStats: (updates: Record<string, any>) => void;
+  updatePreferences: (updates: any) => void;
+  
   // Computed values
   getXPProgress: () => number;
   canAfford: (price: number) => boolean;
@@ -125,14 +131,14 @@ export const useGameStore = create<GameStore>()(
         const newTotalXP = state.totalXP + amount;
         let newLevel = state.level;
         let newXPToNext = state.xpToNextLevel;
-        let leveledUp = false;
+
 
         // Check for level up
         if (newXP >= state.xpToNextLevel) {
           const excessXP = newXP - state.xpToNextLevel;
           newLevel = state.level + 1;
           newXPToNext = Math.floor(state.xpToNextLevel * 1.2);
-          leveledUp = true;
+          
 
           // Trigger level up effects
           setTimeout(() => get().levelUp(), 100);
@@ -325,6 +331,44 @@ export const useGameStore = create<GameStore>()(
           data: { newLevel: state.level, coinsReward }
         }).catch(() => {});
       }
+    },
+
+    // ADHD-specific methods
+    awardXP: (amount: number, reason?: string) => {
+      get().updateXP(amount, reason);
+    },
+
+    awardDopamineCoins: (amount: number, reason?: string) => {
+      get().updateCoins(amount, reason);
+    },
+
+    updateStats: (updates: Record<string, any>) => {
+      set((state) => {
+        const newStats = { ...state.stats } as any;
+        
+        Object.entries(updates).forEach(([key, value]) => {
+          if (typeof value === 'function') {
+            newStats[key] = value(newStats[key] || 0);
+          } else {
+            newStats[key] = value;
+          }
+        });
+
+        return {
+          ...state,
+          stats: newStats
+        };
+      });
+    },
+
+    updatePreferences: (updates: any) => {
+      set((state) => ({
+        ...state,
+        preferences: {
+          ...state.preferences,
+          ...updates
+        }
+      }));
     },
 
     // Computed values
