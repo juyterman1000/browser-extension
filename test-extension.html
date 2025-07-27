@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test ADHD Extension</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.6;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .test-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .test-section h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .emoji {
+            margin-right: 8px;
+        }
+        
+        .status {
+            float: right;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+        
+        .working {
+            color: #10b981;
+        }
+        
+        .instructions {
+            background: #e3f2fd;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        .sample-content {
+            margin: 40px 0;
+            padding: 20px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        
+        .long-text {
+            font-size: 16px;
+            line-height: 1.5;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠⚡ FlowState ADHD Extension Test Page</h1>
+        
+        <div class="instructions">
+            <h3>📋 How to Test the Extension</h3>
+            <ol>
+                <li><strong>Install the extension</strong> (follow ADHD_SETUP_GUIDE.md)</li>
+                <li><strong>Click the extension icon</strong> in your browser toolbar</li>
+                <li><strong>Try the features below</strong> to see them in action</li>
+                <li><strong>Use keyboard shortcuts</strong> on this page</li>
+            </ol>
+        </div>
+
+        <div class="test-section">
+            <h3>🎯 Focus Features Test</h3>
+            <ul class="feature-list">
+                <li>
+                    <span class="emoji">⏲️</span>
+                    Click extension → Start Focus Timer
+                    <span class="status working">Should work!</span>
+                </li>
+                <li>
+                    <span class="emoji">🎯</span>
+                    Press Alt+F for Focus Mode on this page
+                    <span class="status working">Should work!</span>
+                </li>
+                <li>
+                    <span class="emoji">📱</span>
+                    Check if floating focus button appears (top-right)
+                    <span class="status working">Should work!</span>
+                </li>
+                <li>
+                    <span class="emoji">🕒</span>
+                    Look for time indicator (bottom-right corner)
+                    <span class="status working">Should work!</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>💝 Wellness Features Test</h3>
+            <ul class="feature-list">
+                <li>
+                    <span class="emoji">😰</span>
+                    Click extension → Wellness → "Overwhelmed"
+                    <span class="status working">Gets strategy!</span>
+                </li>
+                <li>
+                    <span class="emoji">🫁</span>
+                    Try "4-7-8 Breathing" sensory break
+                    <span class="status working">Gets timer!</span>
+                </li>
+                <li>
+                    <span class="emoji">🏃‍♀️</span>
+                    Try "Quick Movement" break
+                    <span class="status working">Gets reminder!</span>
+                </li>
+                <li>
+                    <span class="emoji">🌍</span>
+                    Try "5-4-3-2-1 Grounding" technique
+                    <span class="status working">Gets guidance!</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>⏰ Time Management Test</h3>
+            <ul class="feature-list">
+                <li>
+                    <span class="emoji">⏰</span>
+                    Set 5-minute reminder
+                    <span class="status working">Browser notification!</span>
+                </li>
+                <li>
+                    <span class="emoji">🍅</span>
+                    Start 25-minute Pomodoro
+                    <span class="status working">Background timer!</span>
+                </li>
+                <li>
+                    <span class="emoji">📊</span>
+                    Check XP and coins progress
+                    <span class="status working">Numbers update!</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 Keyboard Shortcuts Test</h3>
+            <ul class="feature-list">
+                <li>
+                    <span class="emoji">⌨️</span>
+                    Press <strong>Alt + F</strong> for Focus Mode
+                    <span class="status working">Overlay appears!</span>
+                </li>
+                <li>
+                    <span class="emoji">📖</span>
+                    Press <strong>Alt + R</strong> for Reading Mode
+                    <span class="status working">Text reformats!</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="sample-content">
+            <h3>📖 Sample Content for Reading Mode Test</h3>
+            <div class="long-text">
+                <p>This is sample content to test the reading mode feature. When you press Alt+R, this text should become easier to read for ADHD brains.</p>
+                
+                <p>ADHD brains often struggle with dense text, poor contrast, and cramped layouts. The reading mode feature should make this content more accessible by:</p>
+                
+                <ul>
+                    <li>Increasing line spacing for better readability</li>
+                    <li>Limiting line length to reduce eye strain</li>
+                    <li>Improving contrast and background color</li>
+                    <li>Adding breathing room around text blocks</li>
+                </ul>
+                
+                <p>Try pressing Alt+R now to see the difference! This is exactly the kind of practical feature that makes a real difference for ADHD users in their daily browsing.</p>
+                
+                <h4>More Text to Test With</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>✅ Success Indicators</h3>
+            <p><strong>The extension is working if you see:</strong></p>
+            <ul>
+                <li>🎯 Focus button in top-right corner of this page</li>
+                <li>🕒 Time display in bottom-right corner</li>
+                <li>💬 Popup opens when you click the extension icon</li>
+                <li>🔔 Browser notifications when timers complete</li>
+                <li>📖 Text reformats when you press Alt+R</li>
+                <li>🌑 Focus overlay when you press Alt+F</li>
+            </ul>
+        </div>
+
+        <div class="test-section">
+            <h3>🐛 Not Working? Quick Fixes</h3>
+            <ul class="feature-list">
+                <li>
+                    <span class="emoji">🔄</span>
+                    Refresh this page after installing
+                    <span class="status">Try this first!</span>
+                </li>
+                <li>
+                    <span class="emoji">🔔</span>
+                    Allow notifications in browser settings
+                    <span class="status">For timers!</span>
+                </li>
+                <li>
+                    <span class="emoji">📁</span>
+                    Check manifest.json exists in extension folder
+                    <span class="status">Common issue!</span>
+                </li>
+                <li>
+                    <span class="emoji">🖼️</span>
+                    Add at least one icon file to icons/ folder
+                    <span class="status">Required!</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Simple test script to verify basic functionality
+        console.log('🧠 ADHD Extension Test Page Loaded');
+        
+        // Check if extension content script loaded
+        setTimeout(() => {
+            const focusButton = document.getElementById('adhd-focus-toggle');
+            const timeIndicator = document.getElementById('adhd-time-indicator');
+            
+            if (focusButton) {
+                console.log('✅ Focus button detected - Extension working!');
+            } else {
+                console.log('❌ Focus button not found - Extension may not be loaded');
+            }
+            
+            if (timeIndicator) {
+                console.log('✅ Time indicator detected - Extension working!');
+            } else {
+                console.log('❌ Time indicator not found - Extension may not be loaded');
+            }
+        }, 2000);
+        
+        // Test message to extension
+        if (typeof chrome !== 'undefined' && chrome.runtime) {
+            chrome.runtime.sendMessage({
+                type: 'ping'
+            }, (response) => {
+                if (chrome.runtime.lastError) {
+                    console.log('❌ Extension not responding');
+                } else {
+                    console.log('✅ Extension communication working');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
