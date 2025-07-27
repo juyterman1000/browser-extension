@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlowState ADHD</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 380px;
+            min-height: 500px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .greeting {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .motivational {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-value {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.7em;
+            opacity: 0.8;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            padding: 4px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 8px 12px;
+            border: none;
+            background: transparent;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8em;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            background: rgba(255, 255, 255, 0.3);
+            opacity: 1;
+            font-weight: 600;
+        }
+
+        .tab:hover {
+            opacity: 1;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Focus Section */
+        .focus-timer {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .timer-display {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .timer-status {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            font-size: 0.9em;
+        }
+
+        .btn-primary {
+            background: #10b981;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .btn-warning {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Emotion Check */
+        .emotion-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .emotion-btn {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.2s ease;
+            padding: 8px;
+        }
+
+        .emotion-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .emotion-icon {
+            font-size: 1.5em;
+            margin-bottom: 4px;
+        }
+
+        .emotion-label {
+            font-size: 0.6em;
+            text-align: center;
+        }
+
+        /* Sensory Breaks */
+        .break-options {
+            display: grid;
+            gap: 10px;
+        }
+
+        .break-option {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .break-option:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(4px);
+        }
+
+        .break-icon {
+            font-size: 1.5em;
+            min-width: 30px;
+        }
+
+        .break-details {
+            flex: 1;
+        }
+
+        .break-name {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .break-desc {
+            font-size: 0.8em;
+            opacity: 0.8;
+        }
+
+        .break-duration {
+            font-size: 0.7em;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: auto;
+        }
+
+        /* Time Awareness */
+        .time-display {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .current-time {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .time-period {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .work-time-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .work-time-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .work-time-value {
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+
+        .work-time-label {
+            font-size: 0.7em;
+            opacity: 0.8;
+        }
+
+        /* Quick Reminders */
+        .reminder-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+        }
+
+        .reminder-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 8px;
+            padding: 8px;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.2s ease;
+        }
+
+        .reminder-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Notifications */
+        .notification {
+            background: rgba(16, 185, 129, 0.3);
+            border: 1px solid rgba(16, 185, 129, 0.5);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Task List */
+        .task-item {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .task-checkbox {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+        }
+
+        .task-checkbox.checked {
+            background: #10b981;
+            border-color: #10b981;
+        }
+
+        .task-text {
+            flex: 1;
+            font-size: 0.9em;
+        }
+
+        .task-energy {
+            font-size: 0.7em;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 400px) {
+            body {
+                width: 320px;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .emotion-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Accessibility */
+        .btn:focus,
+        .tab:focus,
+        .emotion-btn:focus,
+        .break-option:focus {
+            outline: 2px solid rgba(255, 255, 255, 0.8);
+            outline-offset: 2px;
+        }
+
+        /* Loading state */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">🧠⚡</div>
+            <div class="greeting" id="greeting">Good morning!</div>
+            <div class="motivational" id="motivational">Your ADHD brain is powerful!</div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="level">1</div>
+                <div class="stat-label">Level</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="streak">0</div>
+                <div class="stat-label">Streak</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="coins">50</div>
+                <div class="stat-label">🪙 Coins</div>
+            </div>
+        </div>
+
+        <!-- Notifications -->
+        <div id="notifications"></div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('focus')">🎯 Focus</button>
+            <button class="tab" onclick="showTab('wellness')">💝 Wellness</button>
+            <button class="tab" onclick="showTab('time')">⏰ Time</button>
+        </div>
+
+        <!-- Focus Tab -->
+        <div id="focus" class="tab-content active">
+            <div class="focus-timer">
+                <div class="timer-display" id="timerDisplay">25:00</div>
+                <div class="timer-status" id="timerStatus">Ready to focus</div>
+                <div class="timer-controls">
+                    <button class="btn btn-primary" id="startBtn" onclick="startFocus()">Start</button>
+                    <button class="btn btn-secondary" id="pauseBtn" onclick="pauseFocus()" style="display: none;">Pause</button>
+                    <button class="btn btn-warning" id="stopBtn" onclick="stopFocus()" style="display: none;">Stop</button>
+                </div>
+            </div>
+            
+            <div>
+                <h4 style="margin-bottom: 10px;">🎯 ADHD Focus Tips</h4>
+                <ul style="font-size: 0.9em; opacity: 0.9; padding-left: 20px; line-height: 1.4;">
+                    <li>Start small - even 10 minutes counts!</li>
+                    <li>Change environment if stuck</li>
+                    <li>Hyperfocus is valid focus too</li>
+                    <li>Use body doubling - work "with" someone</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Wellness Tab -->
+        <div id="wellness" class="tab-content">
+            <h4 style="margin-bottom: 15px;">💝 How are you feeling?</h4>
+            <div class="emotion-grid">
+                <button class="emotion-btn" onclick="selectEmotion('overwhelmed')">
+                    <div class="emotion-icon">😰</div>
+                    <div class="emotion-label">Overwhelmed</div>
+                </button>
+                <button class="emotion-btn" onclick="selectEmotion('frustrated')">
+                    <div class="emotion-icon">😤</div>
+                    <div class="emotion-label">Frustrated</div>
+                </button>
+                <button class="emotion-btn" onclick="selectEmotion('anxious')">
+                    <div class="emotion-icon">😟</div>
+                    <div class="emotion-label">Anxious</div>
+                </button>
+                <button class="emotion-btn" onclick="selectEmotion('restless')">
+                    <div class="emotion-icon">😣</div>
+                    <div class="emotion-label">Restless</div>
+                </button>
+                <button class="emotion-btn" onclick="selectEmotion('hyperfocused')">
+                    <div class="emotion-icon">🎯</div>
+                    <div class="emotion-label">Hyperfocused</div>
+                </button>
+                <button class="emotion-btn" onclick="selectEmotion('calm')">
+                    <div class="emotion-icon">😌</div>
+                    <div class="emotion-label">Calm</div>
+                </button>
+                <button class="emotion-btn" onclick="selectEmotion('excited')">
+                    <div class="emotion-icon">🤩</div>
+                    <div class="emotion-label">Excited</div>
+                </button>
+                <button class="emotion-btn" onclick="selectEmotion('unmotivated')">
+                    <div class="emotion-icon">😑</div>
+                    <div class="emotion-label">Unmotivated</div>
+                </button>
+            </div>
+
+            <h4 style="margin: 20px 0 15px 0;">🌿 Sensory Breaks</h4>
+            <div class="break-options">
+                <button class="break-option" onclick="startBreak('breathing')">
+                    <div class="break-icon">🫁</div>
+                    <div class="break-details">
+                        <div class="break-name">4-7-8 Breathing</div>
+                        <div class="break-desc">Calm your nervous system</div>
+                    </div>
+                    <div class="break-duration">2 min</div>
+                </button>
+                <button class="break-option" onclick="startBreak('movement')">
+                    <div class="break-icon">🏃‍♀️</div>
+                    <div class="break-details">
+                        <div class="break-name">Quick Movement</div>
+                        <div class="break-desc">Get your body moving</div>
+                    </div>
+                    <div class="break-duration">3 min</div>
+                </button>
+                <button class="break-option" onclick="startBreak('grounding')">
+                    <div class="break-icon">🌍</div>
+                    <div class="break-details">
+                        <div class="break-name">5-4-3-2-1 Grounding</div>
+                        <div class="break-desc">Connect with your environment</div>
+                    </div>
+                    <div class="break-duration">2 min</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Time Tab -->
+        <div id="time" class="tab-content">
+            <div class="time-display">
+                <div class="current-time" id="currentTime">12:00</div>
+                <div class="time-period" id="timePeriod">Afternoon</div>
+            </div>
+
+            <div class="work-time-info">
+                <div class="work-time-card">
+                    <div class="work-time-value" id="workTime">--</div>
+                    <div class="work-time-label">Work Time</div>
+                </div>
+                <div class="work-time-card">
+                    <div class="work-time-value" id="nextBreak">--:--</div>
+                    <div class="work-time-label">Next Break</div>
+                </div>
+            </div>
+
+            <h4 style="margin-bottom: 10px;">⏰ Quick Reminders</h4>
+            <div class="reminder-buttons">
+                <button class="reminder-btn" onclick="setReminder(5)">5 min</button>
+                <button class="reminder-btn" onclick="setReminder(10)">10 min</button>
+                <button class="reminder-btn" onclick="setReminder(25)">Pomodoro</button>
+            </div>
+
+            <div style="margin-top: 15px;">
+                <h4 style="margin-bottom: 10px;">⏰ Time Blindness Support</h4>
+                <ul style="font-size: 0.9em; opacity: 0.9; padding-left: 20px; line-height: 1.4;">
+                    <li>Set visual timers for tasks</li>
+                    <li>Use external time cues</li>
+                    <li>Build buffer time into schedule</li>
+                    <li>Track your energy patterns</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="adhd-popup.js"></script>
+</body>
+</html>
